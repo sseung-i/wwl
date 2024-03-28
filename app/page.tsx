@@ -1,12 +1,10 @@
 import S from "./page.module.scss";
-import Link from "next/link";
+import LinkBtn from "@/components/common/LinkBtn";
 
 export default function Home() {
   return (
     <main className={S.main}>
-      <Link href="/create" className={S.createBtn}>
-        GIF 생성
-      </Link>
+      <LinkBtn name="GIF 생성" href="/create" className={S.createBtn} />
     </main>
   );
 }
