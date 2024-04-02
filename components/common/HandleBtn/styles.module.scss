@@ -1,0 +1,9 @@
+.handleBtn {
+  padding: 14px;
+  background-color: $--keycolor;
+  color: #fff;
+  @include T-m();
+  max-width: 600px;
+  width: 100%;
+  border-radius: 30px;
+}

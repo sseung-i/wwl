@@ -1,0 +1,8 @@
+.sectionComponent {
+  @include flex(
+    $direction: column,
+    $align: space-between,
+    $justify: flex-start,
+    $gap: 6px
+  );
+}

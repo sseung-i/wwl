@@ -1,0 +1,43 @@
+@mixin font-weight($b) {
+  @if ($b == "b") {
+    font-weight: 700;
+  } @else {
+    font-weight: 400;
+  }
+}
+
+@mixin T-xs($b: "n") {
+  font-size: 12px;
+  line-height: 14px;
+  @include font-weight($b);
+}
+
+@mixin T-s($b: "n") {
+  font-size: 14px;
+  line-height: 16px;
+  @include font-weight($b);
+}
+
+@mixin T-r($b: "n") {
+  font-size: 16px;
+  line-height: 19px;
+  @include font-weight($b);
+}
+
+@mixin T-m($b: "n") {
+  font-size: 20px;
+  line-height: 24px;
+  @include font-weight($b);
+}
+
+@mixin T-l($b: "n") {
+  font-size: 24px;
+  line-height: 28px;
+  @include font-weight($b);
+}
+
+@mixin T-xl($b: "n") {
+  font-size: 30px;
+  line-height: 36px;
+  @include font-weight($b);
+}

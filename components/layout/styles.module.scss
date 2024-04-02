@@ -1,0 +1,9 @@
+.wrapper {
+  padding: 30px 20px;
+  @include flex(
+    $direction: column,
+    $align: space-between,
+    $justify: flex-start,
+    $gap: 18px
+  );
+}

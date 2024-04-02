@@ -3,7 +3,7 @@
 const nextConfig = {
   sassOptions: {
     includePaths: ["styles"],
-    prependData: `@import "styles/variables.scss"; @import "styles/mixin.scss";`, // prependData 옵션 추가
+    prependData: `@import "styles/variables.scss"; @import "styles/fonts.scss"; @import "styles/mixin.scss";`, // prependData 옵션 추가
   },
   webpack(config) {
     config.module.rules.push({

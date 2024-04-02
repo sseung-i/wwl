@@ -7,14 +7,21 @@ import Modal from "../Modal";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import DeleteIcon from "@icon/delete-line.svg";
-import workerStr from "@/utils/gifWorker";
-import GIF from "gif.js.optimized";
+
+import HandleBtn from "../HandleBtn";
+import useGifCreateStore from "@/store/gif/create";
 
 const AddingImageList = () => {
-  // // todo : 아예 블롭데이터 이미지로 사용해버리기?
-  const [imgList, setImgList] = useState<
-    { ref: HTMLCanvasElement | null; src: string }[]
-  >([]);
+  const {
+    imageList,
+    addImage,
+    deleteImage,
+    changeImageToBlob,
+    changeImageListOrder,
+    addRefToImageList,
+    copyImageList,
+  } = useGifCreateStore((state) => state);
+
   const [resultImg, setResultImg] = useState<string>("");
   const [isOpen, setIsOpen] = useState<number | null>(null);
 
@@ -50,72 +57,21 @@ const AddingImageList = () => {
     if (!files) return;
     const filesArray = Array.from(files);
 
-    setImgList((prev) => [
-      ...prev,
-      ...filesArray.map((file) => {
-        return { ref: null, src: URL.createObjectURL(file) };
-      }),
-    ]);
+    addImage(filesArray);
+
     e.target.value = "";
   };
 
   const handleDeleteImg = (index: number) => {
     // 모달로
     if (window.confirm(`${index + 1}번째 이미지를 삭제하시겠습니까?`)) {
-      setImgList((prev) => {
-        if (prev.length === 1) return [];
-
-        URL.revokeObjectURL(prev[index + 1].src);
-        return [...prev.slice(0, index), ...prev.slice(index + 1, prev.length)];
-      });
+      deleteImage(index);
     }
   };
 
   const handleEditorClose = () => {
     setIsOpen(null);
   };
-
-  // const throttledSetCroppedImage = useDebounce(setCroppedImage, 600);
-
-  // const onCrop = () => {
-  //   const cropper = cropperRef.current?.cropper;
-  //   if (!cropper) return;
-
-  //   // // Data URL로 크롭된 이미지 가져오기
-  //   const croppedDataURL = cropper.getCroppedCanvas().toDataURL();
-
-  //   // //Data URL을 Blob으로 변환
-  //   function dataURLtoBlob(dataURL: string) {
-  //     const arr = dataURL.split(",");
-  //     const matches = arr[0].match(/:(.*?);/);
-  //     const mime = matches && matches.length >= 2 ? matches[1] : null;
-
-  //     // MIME 타입이 없을 때 크롭 리셋
-  //     if (!mime) {
-  //       const cropperInstance = cropperRef.current?.cropper;
-  //       if (!cropperInstance) return;
-
-  //       cropperInstance.reset();
-  //       return;
-  //     }
-
-  //     const bstr = atob(arr[1]);
-  //     let n = bstr.length;
-  //     const u8arr = new Uint8Array(n);
-
-  //     while (n--) {
-  //       u8arr[n] = bstr.charCodeAt(n);
-  //     }
-  //     return new Blob([u8arr], { type: mime });
-  //   }
-
-  //   // // Blob으로 변환
-  //   const blob = dataURLtoBlob(croppedDataURL);
-
-  //   if (blob) {
-  //     throttledSetCroppedImage(blob);
-  //   }
-  // };
 
   const handleSetCroppedImg = (listIndex: number) => {
     const croppedImage = cropperRef.current?.cropper
@@ -127,99 +83,43 @@ const AddingImageList = () => {
     const blob = croppedImage && dataURLtoBlob(croppedImage);
 
     if (blob) {
-      setImgList((prev) => {
-        const setItem = prev[listIndex];
-        setItem.src = URL.createObjectURL(blob);
-
-        return [
-          ...prev.slice(0, listIndex),
-          setItem,
-          ...prev.slice(listIndex + 1, prev.length),
-        ];
-      });
+      changeImageToBlob(blob, listIndex);
     }
 
     handleEditorClose();
   };
 
-  const handleChangeOrder = (type: "PREV" | "NEXT", index: number) => {
-    // 첫 번째 이미지에서 PREV를 시도하거나, 마지막 이미지에서 NEXT를 시도하는 경우 아무 작업도 하지 않음
-    if (
-      (type === "PREV" && index === 0) ||
-      (type === "NEXT" && index === imgList.length - 1)
-    ) {
-      return;
-    }
+  // const handleCreateGif = async () => {
+  //   const workerBlob = new Blob([workerStr], {
+  //     type: "application/javascript",
+  //   });
 
-    // 새로운 이미지 리스트를 생성하기 위해 현재 이미지 리스트를 복사
-    const newImgList = [...imgList];
+  //   const gif = new GIF({
+  //     workers: 2,
+  //     workerScript: URL.createObjectURL(workerBlob),
+  //     quality: 1,
+  //     width: 300,
+  //     height: 300,
+  //   });
 
-    // 'PREV' 타입의 경우, 현재 이미지와 이전 이미지의 위치를 바꿈
-    if (type === "PREV") {
-      [newImgList[index], newImgList[index - 1]] = [
-        newImgList[index - 1],
-        newImgList[index],
-      ];
-    }
-    // 'NEXT' 타입의 경우, 현재 이미지와 다음 이미지의 위치를 바꿈
-    else if (type === "NEXT") {
-      [newImgList[index], newImgList[index + 1]] = [
-        newImgList[index + 1],
-        newImgList[index],
-      ];
-    }
+  //   imageList.forEach(({ ref, src }) => {
+  //     if (ref) {
+  //       const ctx = ref.getContext("2d", { willReadFrequently: true });
+  //       if (ctx) {
+  //         // 캔버스 컨텍스트를 직접 프레임으로 추가합니다.
+  //         gif.addFrame(ctx, { delay: 100, copy: true });
+  //       }
+  //     }
+  //   });
 
-    // 상태를 업데이트하여 UI에 변경된 순서를 반영
-    setImgList(newImgList);
-  };
+  //   gif.on("finished", (blob: Blob) => {
+  //     const url = URL.createObjectURL(blob);
+  //     console.log("--url ::", url);
+  //     setResultImg(url);
+  //   });
 
-  const handleCreateGif = async () => {
-    const workerBlob = new Blob([workerStr], {
-      type: "application/javascript",
-    });
-
-    const gif = new GIF({
-      workers: 2,
-      workerScript: URL.createObjectURL(workerBlob),
-      quality: 1,
-      width: 300,
-      height: 300,
-    });
-
-    imgList.forEach(({ ref, src }) => {
-      if (ref) {
-        const ctx = ref.getContext("2d", { willReadFrequently: true });
-        if (ctx) {
-          // 캔버스 컨텍스트를 직접 프레임으로 추가합니다.
-          gif.addFrame(ctx, { delay: 100, copy: true });
-        }
-      }
-      /*
-      const imageDateUrl = ref?.toDataURL("image/png"); // 캔버스의 이미지 데이터 URL 생성
-      if (!imageDateUrl) return;
-
-      const img = new Image();
-
-      img.width = 300;
-      img.height = 300;
-
-      img.onload = () => {
-        // 이미지 로드 완료 후에 GIF 프레임 추가
-        gif.addFrame(img, { delay: 500, copy: true });
-      };
-
-      img.src = imageDateUrl;
-      */
-    });
-
-    gif.on("finished", (blob: Blob) => {
-      const url = URL.createObjectURL(blob);
-      console.log("--url ::", url);
-      setResultImg(url);
-    });
-
-    gif.render(); // GIF 생성 시작
-  };
+  //   gif.render(); // GIF 생성 시작
+  // };
 
   const setImageInCanvas = (
     canvas: HTMLCanvasElement | null,
@@ -228,10 +128,7 @@ const AddingImageList = () => {
   ) => {
     if (!canvas) return;
 
-    setImgList((prev) => {
-      prev[index].ref = canvas;
-      return prev;
-    });
+    addRefToImageList(canvas, index);
 
     const ctx = canvas.getContext("2d", { willReadFrequently: true });
     const image = new Image();
@@ -282,7 +179,7 @@ const AddingImageList = () => {
         <Modal onClose={handleEditorClose}>
           <div className={S.editModal}>
             <Cropper
-              src={imgList[isOpen].src}
+              src={imageList[isOpen].src}
               style={{ width: "100%" }}
               ref={cropperRef}
               initialAspectRatio={1}
@@ -292,7 +189,7 @@ const AddingImageList = () => {
               guides={false}
               dragMode="none"
             />
-            <button
+            {/* <button
               onClick={() => {
                 cropperRef.current?.cropper.scale(-1, -1);
               }}
@@ -319,7 +216,7 @@ const AddingImageList = () => {
               }}
             >
               되돌리기
-            </button>
+            </button> */}
             <button
               className={S.cropFinishBtn}
               onClick={() => handleSetCroppedImg(isOpen)}
@@ -330,7 +227,7 @@ const AddingImageList = () => {
         </Modal>
       )}
       <div className={S.imgList}>
-        {imgList.map(({ ref, src }, index) => {
+        {imageList.map(({ ref, src }, index) => {
           return (
             <div className={S.imgContainer} key={index}>
               <div
@@ -341,17 +238,12 @@ const AddingImageList = () => {
                   width={300}
                   height={300}
                   ref={(node) => setImageInCanvas(node, index, src)}
-                ></canvas>
-                {/* <NextImage
-                  src={URL.createObjectURL(imgSrc)}
-                  alt=""
-                  fill
-                /> */}
+                />
               </div>
               <div className={S.infoWrap}>
                 <button
                   disabled={index < 1}
-                  onClick={() => handleChangeOrder("PREV", index)}
+                  onClick={() => changeImageListOrder("PREV", index)}
                 >{`<`}</button>
                 <div className={S.infoCenter}>
                   <span className={S.order}>{index + 1}</span>
@@ -364,7 +256,7 @@ const AddingImageList = () => {
                       canvas.width = 300; // 너비 설정
                       canvas.height = 300; // 높이 설정
                       const targetItem = { ref: canvas, src };
-                      setImgList((prev) => [...prev, targetItem]);
+                      copyImageList(targetItem);
                     }}
                   >
                     복사
@@ -375,14 +267,14 @@ const AddingImageList = () => {
                 </div>
                 <button
                   disabled={5 < index}
-                  onClick={() => handleChangeOrder("NEXT", index)}
+                  onClick={() => changeImageListOrder("NEXT", index)}
                 >{`>`}</button>
               </div>
             </div>
           );
         })}
 
-        {imgList.length <= 7 && (
+        {imageList.length <= 7 && (
           <label htmlFor="addImgInput" className={`${S.squareBox} ${S.addBtn}`}>
             +
             <input
@@ -396,9 +288,7 @@ const AddingImageList = () => {
           </label>
         )}
       </div>
-      <button className={S.createBtn} onClick={handleCreateGif}>
-        생성
-      </button>
+      {/* <HandleBtn onClick={handleCreateGif}>gif로 만들기</HandleBtn> */}
       {resultImg && (
         <>
           <NextImage src={resultImg} alt="result" width={300} height={300} />

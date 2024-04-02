@@ -1,0 +1,7 @@
+.header {
+  @include flex($justify: space-between);
+  height: 50px;
+  background-color: $--keycolor;
+  padding: 0 20px;
+  color: #fff;
+}

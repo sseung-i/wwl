@@ -1,21 +1,14 @@
-import dynamic from "next/dynamic";
+import HandleBtn from "@/components/common/HandleBtn";
+import { ImageList } from "@/components/create";
+import PageWrapper from "@/components/layout/PageWrapper";
+import { handleCreateGif } from "@/utils/gif";
 
 const CreatePage = () => {
-  const DynamicComponent = dynamic(
-    () => import("@/components/common/AddingImageList"),
-    {
-      ssr: false,
-      loading: () => <p>로딩중...</p>,
-    }
-  );
-
   return (
-    <main>
-      <section>
-        <h3>이미지 선택 (최대 7개)</h3>
-        <DynamicComponent />
-      </section>
-    </main>
+    <PageWrapper>
+      <ImageList />
+      <HandleBtn onClick={handleCreateGif}>gif로 만들기</HandleBtn>
+    </PageWrapper>
   );
 };
 
