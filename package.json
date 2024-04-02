@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "gif.js.optimized": "^1.0.1",
-    "immer": "^10.0.4",
+    "immer": "^9.0.5",
     "next": "14.1.4",
     "react": "^18",
     "react-cropper": "^2.3.3",

@@ -1,0 +1,25 @@
+.effects {
+    @include flex($direction: column, $justify: flex-start, $align: space-between, $gap: 14px);
+}
+
+.effectWrap {
+    padding: 10px 16px;
+    @include flex($justify: flex-start, $gap: 10px);
+    border: 1px solid $--border-light;
+    border-radius: 6px;
+    
+    .effectName {
+        @include T-s("b");
+    }
+
+    .inputWrap {
+        @include flex($justify: flex-start, $gap: 10px);
+        @include T-xs();
+        color: $--T-medium;
+        
+        button.active {
+            @include T-xs("b");
+            color: $--keycolor;
+        }
+    }
+}

@@ -2,9 +2,14 @@ import { produce } from "immer";
 import { create } from "zustand";
 
 type ImageListItem = { ref: HTMLCanvasElement | null; src: string };
-type State = {
+export type State = {
   imageList: ImageListItem[];
   resultGif: string;
+  effect: {
+    rotate: null | "R" | "L";
+    scale: number;
+    time: number;
+  }
 };
 
 type Action = {
@@ -14,12 +19,23 @@ type Action = {
   changeImageListOrder: (type: "PREV" | "NEXT", targetIndex: number) => void;
   addRefToImageList: (canvas: HTMLCanvasElement, listIndex: number) => void;
   copyImageList: (targetItem: ImageListItem) => void;
+  setEffect: (type: keyof State["effect"],value: State["effect"]["rotate"]) => void;
   setResultGif: (resultGif: State["resultGif"]) => void;
+  reset: () => void;
 };
 
-const useGifCreateStore = create<State & Action>((set, get) => ({
+export const initValue = {
   imageList: [],
   resultGif: "",
+  effect: {
+    rotate: null,
+    scale: 1,
+    time: 1000,
+  }
+}
+
+const useGifCreateStore = create<State & Action>((set, get) => ({
+  ...initValue,
   addImage: (files) =>
     set((state) => ({
       imageList: [
@@ -43,8 +59,7 @@ const useGifCreateStore = create<State & Action>((set, get) => ({
     }),
   changeImageToBlob: (blobImage, listIndex) =>
     set(({ imageList }) => {
-      const setItem = imageList[listIndex];
-      setItem.src = URL.createObjectURL(blobImage);
+      const setItem = {...imageList[listIndex],src:URL.createObjectURL(blobImage)};
 
       return {
         imageList: [
@@ -89,7 +104,9 @@ const useGifCreateStore = create<State & Action>((set, get) => ({
   },
   copyImageList: (targetItem) =>
     set(({ imageList }) => ({ imageList: [...imageList, targetItem] })),
+  setEffect: (type,value) => set(({effect}) => ({effect: {...effect,[type]: value}})),
   setResultGif: (resultGif) => set({ resultGif }),
+  reset: () => set({...initValue})
 }));
 
 export default useGifCreateStore;

@@ -15,7 +15,7 @@ export const handleCreateGif = async () => {
     height: 300,
   });
 
-  const imageList = useGifCreateStore().imageList;
+  const imageList = useGifCreateStore.getState().imageList;
 
   imageList.forEach(({ ref, src }) => {
     if (ref) {
@@ -30,7 +30,7 @@ export const handleCreateGif = async () => {
   gif.on("finished", (blob: Blob) => {
     const url = URL.createObjectURL(blob);
     console.log("--url ::", url);
-    useGifCreateStore().setResultGif(url);
+    useGifCreateStore.getState().setResultGif(url);
   });
 
   gif.render(); // GIF 생성 시작

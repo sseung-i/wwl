@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import SectionTitle from "../SectionTitle";
+import SectionTitle from "./SectionTitle";
 import S from "./styles.module.scss";
 
 interface Props extends PropsWithChildren {

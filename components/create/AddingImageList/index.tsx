@@ -3,12 +3,12 @@
 import { ChangeEvent, useRef, useState } from "react";
 import S from "./styles.module.scss";
 import NextImage from "next/image";
-import Modal from "../Modal";
+import Modal from "../../common/Modal";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import DeleteIcon from "@icon/delete-line.svg";
 
-import HandleBtn from "../HandleBtn";
+import HandleBtn from "../../common/HandleBtn";
 import useGifCreateStore from "@/store/gif/create";
 
 const AddingImageList = () => {
@@ -22,7 +22,6 @@ const AddingImageList = () => {
     copyImageList,
   } = useGifCreateStore((state) => state);
 
-  const [resultImg, setResultImg] = useState<string>("");
   const [isOpen, setIsOpen] = useState<number | null>(null);
 
   const cropperRef = useRef<ReactCropperElement>(null);
@@ -163,15 +162,15 @@ const AddingImageList = () => {
     }
   };
 
-  const handleDownload = () => {
-    // <a> 태그 생성
-    const link = document.createElement("a");
-    link.href = resultImg; // 이미지 URL 설정
-    link.download = "내가만든거.gif"; // 다운로드될 이미지의 이름 설정
-    document.body.appendChild(link); // <a> 태그를 문서에 추가
-    link.click(); // <a> 태그를 프로그래밍 방식으로 클릭하여 다운로드 실행
-    document.body.removeChild(link); // 사용 후 <a> 태그를 문서에서 제거
-  };
+  // const handleDownload = () => {
+  //   // <a> 태그 생성
+  //   const link = document.createElement("a");
+  //   link.href = resultImg; // 이미지 URL 설정
+  //   link.download = "내가만든거.gif"; // 다운로드될 이미지의 이름 설정
+  //   document.body.appendChild(link); // <a> 태그를 문서에 추가
+  //   link.click(); // <a> 태그를 프로그래밍 방식으로 클릭하여 다운로드 실행
+  //   document.body.removeChild(link); // 사용 후 <a> 태그를 문서에서 제거
+  // };
 
   return (
     <>
@@ -289,14 +288,14 @@ const AddingImageList = () => {
         )}
       </div>
       {/* <HandleBtn onClick={handleCreateGif}>gif로 만들기</HandleBtn> */}
-      {resultImg && (
+      {/* {resultImg && (
         <>
           <NextImage src={resultImg} alt="result" width={300} height={300} />
           <button disabled={!resultImg} onClick={handleDownload}>
             저장
           </button>
         </>
-      )}
+      )} */}
     </>
   );
 };

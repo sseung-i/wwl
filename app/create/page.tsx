@@ -1,13 +1,22 @@
+import dynamic from "next/dynamic";
 import HandleBtn from "@/components/common/HandleBtn";
-import { ImageList } from "@/components/create";
-import PageWrapper from "@/components/layout/PageWrapper";
+import { Section, PageWrapper } from "@/components/layout";
 import { handleCreateGif } from "@/utils/gif";
+import { AddingImageList, Apply, EffectInfo } from "@/components/create";
 
 const CreatePage = () => {
+
+  
+  
   return (
     <PageWrapper>
-      <ImageList />
-      <HandleBtn onClick={handleCreateGif}>gif로 만들기</HandleBtn>
+      <Section title="이미지 선택 (최대 7개)">
+        <AddingImageList />
+      </Section>
+      <Section title="이미지 효과">
+        <EffectInfo />
+      </Section>
+      <Apply />
     </PageWrapper>
   );
 };
