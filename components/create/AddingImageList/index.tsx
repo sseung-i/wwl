@@ -8,7 +8,6 @@ import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import DeleteIcon from "@icon/delete-line.svg";
 
-import HandleBtn from "../../common/HandleBtn";
 import useGifCreateStore from "@/store/gif/create";
 
 const AddingImageList = () => {
@@ -287,7 +286,6 @@ const AddingImageList = () => {
           </label>
         )}
       </div>
-      {/* <HandleBtn onClick={handleCreateGif}>gif로 만들기</HandleBtn> */}
       {/* {resultImg && (
         <>
           <NextImage src={resultImg} alt="result" width={300} height={300} />

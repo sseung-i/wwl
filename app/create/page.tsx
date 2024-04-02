@@ -1,11 +1,13 @@
 import dynamic from "next/dynamic";
 import HandleBtn from "@/components/common/HandleBtn";
 import { Section, PageWrapper } from "@/components/layout";
-import { handleCreateGif } from "@/utils/gif";
-import { AddingImageList, Apply, EffectInfo } from "@/components/create";
+import { AddingImageList, EffectInfo } from "@/components/create";
 
 const CreatePage = () => {
 
+  const DynamicApply = dynamic(() => import("@/components/create/Apply"),{
+    ssr: false
+  })
   
   
   return (
@@ -16,7 +18,7 @@ const CreatePage = () => {
       <Section title="이미지 효과">
         <EffectInfo />
       </Section>
-      <Apply />
+      <DynamicApply />
     </PageWrapper>
   );
 };
