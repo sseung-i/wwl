@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.scss";
 import PageWrapper from "@/components/layout/PageWrapper";
 import Header from "@/components/common/Header";
+import CropModal from "@/components/create/Multiple/CropModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className={inter.className}>
         <Header />
+        <CropModal />
         <PageWrapper>{children}</PageWrapper>
       </body>
     </html>

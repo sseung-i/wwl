@@ -9,17 +9,22 @@
     border-radius: 6px;
     
     .effectName {
+        flex-shrink: 0;
         @include T-s("b");
     }
 
     .inputWrap {
+        width: 100%;
         @include flex($justify: flex-start, $gap: 10px);
         @include T-xs();
         color: $--T-medium;
-        
-        button.active {
-            @include T-xs("b");
-            color: $--keycolor;
+
+        > span {
+            flex-shrink: 0;
+        }
+
+        .delay {
+            width: 100%;
         }
     }
 }

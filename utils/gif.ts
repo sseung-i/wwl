@@ -16,13 +16,14 @@ export const handleCreateGif = async () => {
   });
 
   const imageList = useGifCreateStore.getState().imageList;
+  const delay = useGifCreateStore.getState().effect.time / imageList.length;
 
   imageList.forEach(({ ref, src }) => {
     if (ref) {
       const ctx = ref.getContext("2d", { willReadFrequently: true });
       if (ctx) {
         // 캔버스 컨텍스트를 직접 프레임으로 추가합니다.
-        gif.addFrame(ctx, { delay: 100, copy: true });
+        gif.addFrame(ctx, { delay: delay, copy: true });
       }
     }
   });

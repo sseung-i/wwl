@@ -3,6 +3,7 @@ import { create } from "zustand";
 
 type ImageListItem = { ref: HTMLCanvasElement | null; src: string };
 export type State = {
+  isOpen: number | null;
   imageList: ImageListItem[];
   resultGif: string;
   effect: {
@@ -19,12 +20,14 @@ type Action = {
   changeImageListOrder: (type: "PREV" | "NEXT", targetIndex: number) => void;
   addRefToImageList: (canvas: HTMLCanvasElement, listIndex: number) => void;
   copyImageList: (targetItem: ImageListItem) => void;
-  setEffect: (type: keyof State["effect"],value: State["effect"]["rotate"]) => void;
+  setEffect: (type: keyof State["effect"], value: State["effect"][keyof State["effect"]]) => void;
   setResultGif: (resultGif: State["resultGif"]) => void;
+  handleModal: (isOpen: State["isOpen"]) => void;
   reset: () => void;
 };
 
 export const initValue = {
+  isOpen: null,
   imageList: [],
   resultGif: "",
   effect: {
@@ -106,6 +109,7 @@ const useGifCreateStore = create<State & Action>((set, get) => ({
     set(({ imageList }) => ({ imageList: [...imageList, targetItem] })),
   setEffect: (type,value) => set(({effect}) => ({effect: {...effect,[type]: value}})),
   setResultGif: (resultGif) => set({ resultGif }),
+  handleModal: (isOpen) => set({isOpen}),
   reset: () => set({...initValue})
 }));
 

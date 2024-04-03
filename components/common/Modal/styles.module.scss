@@ -1,15 +1,17 @@
 .modalContainer {
   position: fixed;
-  inset: 0;
-  margin: auto;
-  width: fit-content;
-  height: fit-content;
-  z-index: 2;
+  max-width: 90vw;
+  width: 100%;
+  border: 1px solid red;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  z-index: 100000;
 }
 
 .dimm {
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 1;
+  z-index: 99999;
 }

@@ -1,0 +1,28 @@
+.editModal {
+    width: 100%;
+    height: fit-content;
+    margin: auto;
+    // max-width: 800px;
+    max-height: 90vh;
+    // border-radius: 20px;
+
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #fff;
+  
+    button {
+      padding: 10px 30px;
+      border: 1px solid $--keycolor;
+      border-radius: 30px;
+    }
+  
+    .cropFinishBtn {
+      @include flex();
+      margin-top: 30px;
+      padding: 14px;
+      width: 100%;
+      background-color: $--keycolor;
+      color: $--white;
+      border-radius: $--radius-s;
+    }
+  }
