@@ -1,0 +1,7 @@
+.centerContainer {
+  max-width: $--page-maxwidth;
+  min-height: calc(100vh - $--header-height);
+  margin-inline: auto;
+  overflow: hidden;
+  background-color: #fff;
+}

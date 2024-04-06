@@ -2,7 +2,6 @@ import dynamic from "next/dynamic";
 import { Section } from "@/components/layout";
 import AddingImageList from "./AddingImageList";
 import EffectInfo from "./EffectInfo";
-import CropModal from "./CropModal";
 import ResultGif from "./ResultGif";
 
 const Multiple = () => {
@@ -17,7 +16,9 @@ const Multiple = () => {
         <Section title="GIF 설정">
             <EffectInfo />
         </Section>
-        <DynamicApply />
+        <Section>
+            <DynamicApply />
+        </Section>
         <ResultGif />
 
     </>

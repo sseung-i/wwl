@@ -1,2 +1,26 @@
-.imgList {
+.typeList {
+    height: calc(100vh - $--header-height);
+    @include flex($direction: column);
+    
+    .type {
+        width: 100%;
+        @include flex($direction: column,$gap: 10px);
+        height: 100%;
+
+        &.simple {
+            border: 10px solid rgba(255, 231, 134, 0.6);
+        }
+
+        &.multi {
+            border: 10px solid rgba(184, 209, 255, 0.6);
+        }
+
+        h2 {
+            @include T-l("b")
+        }
+
+        p {
+            @include T-r()
+        }
+    }
 }

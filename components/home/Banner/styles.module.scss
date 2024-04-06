@@ -1,0 +1,21 @@
+.bannerContainer {
+    width: 100%;
+    padding: 30px 20px;
+    @include T-l("b");
+    text-align: center;
+    color: $--white;
+    background-color: $--keycolor;
+
+    .LinkBtn {
+        margin-top: 24px;
+        margin-inline: auto;
+        width: 166px;
+        height: 50px;
+        padding: 20px;
+        @include flex($justify:space-between);
+        background-color: $--white;
+        color: $--keycolor;
+        border-radius: 6px;
+        @include T-r("b")
+    }
+}

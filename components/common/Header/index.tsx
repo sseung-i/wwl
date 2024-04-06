@@ -1,9 +1,10 @@
+import Link from "next/link";
 import S from "./styles.module.scss";
 
 const Header = () => {
   return (
     <header className={S.header}>
-      <h1>슬랙티콘</h1>
+      <Link href="/">슬랙티콘</Link>
       <div>버튼</div>
     </header>
   );

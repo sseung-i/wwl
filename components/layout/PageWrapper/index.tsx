@@ -1,11 +1,18 @@
 import { PropsWithChildren } from "react";
 import S from "./styles.module.scss";
+import { Center } from "..";
 
-const PageWrapper = ({ children }: PropsWithChildren) => {
+interface Props extends PropsWithChildren{
+  padding?: string
+}
+
+const PageWrapper = ({ padding = "30px 20px", children }: Props) => {
   return (
-    <main className={S.wrapper}>
+    <Center>
+      <div style={{padding}} className={S.wrapper}>
       {children}
-    </main>
+      </div>
+    </Center>
   );
 };
 

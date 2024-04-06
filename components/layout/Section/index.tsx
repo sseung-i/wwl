@@ -3,13 +3,13 @@ import SectionTitle from "./SectionTitle";
 import S from "./styles.module.scss";
 
 interface Props extends PropsWithChildren {
-  title: string;
+  title?: string;
 }
 
 const Section = ({ title, children }: Props) => {
   return (
     <section className={S.sectionComponent}>
-      <SectionTitle>{title}</SectionTitle>
+      {title && <SectionTitle>{title}</SectionTitle>}
       {children}
     </section>
   );
