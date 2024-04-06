@@ -21,8 +21,10 @@ export default function RootLayout({
     <html lang="ko">
       <body className={inter.className}>
         <Header />
-        <CropModal />
-        <PageWrapper>{children}</PageWrapper>
+        <PageWrapper>
+        {/* <CropModal /> */}
+          {children}
+          </PageWrapper>
       </body>
     </html>
   );

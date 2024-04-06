@@ -6,6 +6,11 @@
   .customSlide {
     width: 300px;
     
+    @include mq-s {
+      width: 150px;
+    }
+
+    
     .squareBox {
       position: relative;
       width: 100%;
@@ -40,6 +45,26 @@
       }
     
       .imgWrap {
+        position: relative;
+
+        .order {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 30px;
+          height: 30px;
+          background-color: rgba(0,0,0,0.6);
+          border-radius: 0 0 $--radius-m 0;
+          @include flex();
+          color: $--white;
+
+          @include mq-s {
+            width: 20px;
+            height: 20px;
+            border-radius: 0 0 $--radius-s 0;
+          }
+        }
+
         > img {
           object-fit: contain;
           width: 100%;

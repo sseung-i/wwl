@@ -5,3 +5,10 @@
   align-items: $align;
   gap: $gap;
 }
+
+
+@mixin mq-s {
+  @media (max-width: 640px) {
+    @content;
+  }
+}

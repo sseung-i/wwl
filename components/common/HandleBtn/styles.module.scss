@@ -1,9 +1,17 @@
 .handleBtn {
   padding: 14px;
-  background-color: $--keycolor;
-  color: #fff;
-  @include T-m();
   max-width: 600px;
   width: 100%;
   border-radius: 30px;
+  @include T-m("b");
+  
+  &.FILL {
+    color: #fff;
+    background-color: $--keycolor;
+  }
+  
+  &.LINE {
+    border: 1px solid  $--keycolor-medium;
+    color:  $--keycolor-medium;
+  }
 }

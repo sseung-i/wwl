@@ -5,15 +5,16 @@ import S from "./styles.module.scss";
 import Modal from "../../../common/Modal";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import DeleteIcon from "@icon/delete-line.svg";
 import 'swiper/css';
 
 import useGifCreateStore from "@/store/gif/create";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import CropModal from "../CropModal";
+import { CopyIcon, DeleteIcon, LeftIcon, RightIcon } from "@/public/assets/icon";
 
 const AddingImageList = () => {
   const {
+    isOpen,
     imageList,
     addImage,
     deleteImage,
@@ -94,6 +95,8 @@ const AddingImageList = () => {
         const fixedSize = 300;
         ctx.canvas.width = fixedSize; // 캔버스 너비를 300px로 설정
         ctx.canvas.height = fixedSize; // 캔버스 높이를 새로운 높이로 설정
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0,0,ctx.canvas.width,ctx.canvas.height);
         const imgW = image.naturalWidth;
         const imgH = image.naturalHeight;
 
@@ -120,8 +123,7 @@ const AddingImageList = () => {
 
   return (
     <>
-        {/* <div className={S.imgList}>
-        </div> */}
+      {isOpen !== null && <CropModal isOpen={isOpen} />}
       <Swiper
         slidesPerView={'auto'}
         spaceBetween={10}
@@ -135,6 +137,7 @@ const AddingImageList = () => {
                   className={`${S.squareBox} ${S.imgWrap}`}
                   onClick={() => handleModal(index)}
                 >
+                  <span className={S.order}>{index + 1}</span>
                   <canvas
                     width={300}
                     height={300}
@@ -145,12 +148,8 @@ const AddingImageList = () => {
                   <button
                     disabled={index < 1}
                     onClick={() => changeImageListOrder("PREV", index)}
-                  >{`<`}</button>
+                  ><LeftIcon /></button>
                   <div className={S.infoCenter}>
-                    <span className={S.order}>{index + 1}</span>
-                    <button onClick={() => handleDeleteImg(index)}>
-                      <DeleteIcon />
-                    </button>
                     <button
                       onClick={() => {
                         const canvas = document.createElement("canvas");
@@ -160,16 +159,16 @@ const AddingImageList = () => {
                         copyImageList(targetItem);
                       }}
                     >
-                      복사
+                      <CopyIcon />
                     </button>
-                    {/* <a download="cropped.png" href={src}>
-                      다운
-                    </a> */}
+                    <button onClick={() => handleDeleteImg(index)}>
+                      <DeleteIcon />
+                    </button>
                   </div>
                   <button
                     disabled={5 < index}
                     onClick={() => changeImageListOrder("NEXT", index)}
-                  >{`>`}</button>
+                  ><RightIcon /></button>
                 </div>
               </div>
             </SwiperSlide>

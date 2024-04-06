@@ -1,8 +1,7 @@
 .modalContainer {
   position: fixed;
-  max-width: 90vw;
+  max-width: calc($--page-maxwidth * 0.9);
   width: 100%;
-  border: 1px solid red;
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);

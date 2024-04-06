@@ -21,6 +21,8 @@
 
         > span {
             flex-shrink: 0;
+            min-width: 30px;
+            text-align: right;
         }
 
         .delay {

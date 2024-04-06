@@ -3,6 +3,7 @@ import { Section } from "@/components/layout";
 import AddingImageList from "./AddingImageList";
 import EffectInfo from "./EffectInfo";
 import CropModal from "./CropModal";
+import ResultGif from "./ResultGif";
 
 const Multiple = () => {
     const DynamicApply = dynamic(() => import("@/components/create/Multiple/Apply"),{
@@ -17,6 +18,8 @@ const Multiple = () => {
             <EffectInfo />
         </Section>
         <DynamicApply />
+        <ResultGif />
+
     </>
     );
 }

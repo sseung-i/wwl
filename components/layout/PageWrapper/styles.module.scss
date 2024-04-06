@@ -1,11 +1,16 @@
 .wrapper {
+  max-width: $--page-maxwidth;
+  min-height: calc(100vh - $--header-height);
+  margin-inline: auto;
   padding: 30px 20px;
   overflow: hidden;
+  background-color: #fff;
+  
 
   @include flex(
     $direction: column,
     $align: space-between,
     $justify: flex-start,
-    $gap: 18px
+    $gap: 30px
   );
 }

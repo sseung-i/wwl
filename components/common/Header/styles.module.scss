@@ -1,6 +1,8 @@
 .header {
+  max-width: 800px;
+  margin-inline: auto;
   @include flex($justify: space-between);
-  height: 50px;
+  height: $--header-height;
   background-color: $--keycolor;
   padding: 0 20px;
   color: #fff;
