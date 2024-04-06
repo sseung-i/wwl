@@ -1,7 +1,6 @@
 'use client'
 
 import HandleBtn from "@/components/common/HandleBtn";
-import { Section } from "@/components/layout";
 import useGifCreateStore from "@/store/gif/create";
 import Image from "next/image";
 import S from "./styles.module.scss"
@@ -41,6 +40,8 @@ const ResultGif = () => {
     return  resultGif && <>
         <Image className={S.resultImg} src={resultGif} alt="result" width={300} height={300} />
         <HandleBtn onClick={handleUpload}>등록하기</HandleBtn>
+        <button onClick={handleDownload}>다운로드 (임시로 놔둠)</button>
+
     </>
         
 };
