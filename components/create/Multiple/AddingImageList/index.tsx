@@ -5,12 +5,17 @@ import S from "./styles.module.scss";
 import Modal from "../../../common/Modal";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import 'swiper/css';
+import "swiper/css";
 
 import useGifCreateStore from "@/store/gif/create";
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide } from "swiper/react";
 import CropModal from "../CropModal";
-import { CopyIcon, DeleteIcon, LeftIcon, RightIcon } from "@/public/assets/icon";
+import {
+  CopyIcon,
+  DeleteIcon,
+  LeftIcon,
+  RightIcon,
+} from "@/public/assets/icon";
 
 const AddingImageList = () => {
   const {
@@ -21,9 +26,8 @@ const AddingImageList = () => {
     changeImageListOrder,
     addRefToImageList,
     copyImageList,
-    handleModal
+    handleModal,
   } = useGifCreateStore((state) => state);
-
 
   /** 이미지 핸들러 */
   const handleAddImgFile = (e: ChangeEvent<HTMLInputElement>) => {
@@ -42,40 +46,6 @@ const AddingImageList = () => {
       deleteImage(index);
     }
   };
-
-  
-
-  // const handleCreateGif = async () => {
-  //   const workerBlob = new Blob([workerStr], {
-  //     type: "application/javascript",
-  //   });
-
-  //   const gif = new GIF({
-  //     workers: 2,
-  //     workerScript: URL.createObjectURL(workerBlob),
-  //     quality: 1,
-  //     width: 300,
-  //     height: 300,
-  //   });
-
-  //   imageList.forEach(({ ref, src }) => {
-  //     if (ref) {
-  //       const ctx = ref.getContext("2d", { willReadFrequently: true });
-  //       if (ctx) {
-  //         // 캔버스 컨텍스트를 직접 프레임으로 추가합니다.
-  //         gif.addFrame(ctx, { delay: 100, copy: true });
-  //       }
-  //     }
-  //   });
-
-  //   gif.on("finished", (blob: Blob) => {
-  //     const url = URL.createObjectURL(blob);
-  //     console.log("--url ::", url);
-  //     setResultImg(url);
-  //   });
-
-  //   gif.render(); // GIF 생성 시작
-  // };
 
   const setImageInCanvas = (
     canvas: HTMLCanvasElement | null,
@@ -96,7 +66,7 @@ const AddingImageList = () => {
         ctx.canvas.width = fixedSize; // 캔버스 너비를 300px로 설정
         ctx.canvas.height = fixedSize; // 캔버스 높이를 새로운 높이로 설정
         ctx.fillStyle = "#FFFFFF";
-        ctx.fillRect(0,0,ctx.canvas.width,ctx.canvas.height);
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         const imgW = image.naturalWidth;
         const imgH = image.naturalHeight;
 
@@ -123,12 +93,7 @@ const AddingImageList = () => {
 
   return (
     <>
-      {isOpen !== null && <CropModal isOpen={isOpen} />}
-      <Swiper
-        slidesPerView={'auto'}
-        spaceBetween={10}
-        className={S.imgList}
-      >
+      <Swiper slidesPerView={"auto"} spaceBetween={10} className={S.imgList}>
         {imageList.map(({ ref, src }, index) => {
           return (
             <SwiperSlide className={S.customSlide} key={index}>
@@ -148,7 +113,9 @@ const AddingImageList = () => {
                   <button
                     disabled={index < 1}
                     onClick={() => changeImageListOrder("PREV", index)}
-                  ><LeftIcon /></button>
+                  >
+                    <LeftIcon />
+                  </button>
                   <div className={S.infoCenter}>
                     <button
                       onClick={() => {
@@ -168,7 +135,9 @@ const AddingImageList = () => {
                   <button
                     disabled={5 < index}
                     onClick={() => changeImageListOrder("NEXT", index)}
-                  ><RightIcon /></button>
+                  >
+                    <RightIcon />
+                  </button>
                 </div>
               </div>
             </SwiperSlide>
@@ -176,7 +145,10 @@ const AddingImageList = () => {
         })}
         {imageList.length <= 7 && (
           <SwiperSlide className={S.customSlide}>
-            <label htmlFor="addImgInput" className={`${S.squareBox} ${S.addBtn}`}>
+            <label
+              htmlFor="addImgInput"
+              className={`${S.squareBox} ${S.addBtn}`}
+            >
               +
               <input
                 id="addImgInput"
@@ -190,7 +162,8 @@ const AddingImageList = () => {
           </SwiperSlide>
         )}
       </Swiper>
-        
+
+      {isOpen !== null && <CropModal isOpen={isOpen} />}
 
       {/* {resultImg && (
         <>

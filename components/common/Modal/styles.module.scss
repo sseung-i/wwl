@@ -1,16 +1,14 @@
 .modalContainer {
   position: fixed;
-  max-width: calc($--page-maxwidth * 0.9);
   width: 100%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  z-index: 100000;
+  height: 100%;
+  inset: 0;
+  margin: auto;
+  z-index: 10000;
 }
 
 .dimm {
   position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.3);
-  z-index: 99999;
 }
