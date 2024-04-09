@@ -103,76 +103,74 @@ const CropModal = ({ isOpen }: Props) => {
 
   return (
     <Modal onClose={handleEditorClose}>
-      <div className={S.modalWrap}>
-        <div className={S.editModal}>
-          <Cropper
-            src={imageList[isOpen].src}
-            style={{
-              width: "100%",
-              height: "auto",
-              maxHeight: "60vh",
-            }}
-            ref={cropperRef}
-            initialAspectRatio={1 / 1}
-            aspectRatio={1 / 1}
-            viewMode={0}
-            autoCropArea={1}
-            guides={false}
-            highlight={false}
-            background={false}
-            minContainerWidth={250}
-            minContainerHeight={300}
-            minCropBoxWidth={100}
-            minCropBoxHeight={100}
-            minCanvasWidth={50}
-            minCanvasHeight={50}
-            dragMode="move"
-          />
-          <div className={S.buttonWrap}>
-            <ul className={S.effectWrap}>
-              <li className={S.effectGrop}>
-                <button onClick={handleReset}>
-                  <h4>초기화</h4>
-                </button>
-              </li>
-              <li className={S.effectGrop}>
-                <h4>반전</h4>
-                <button
-                  className={filter.flipW ? S.active : ""}
-                  onClick={() => handleFlip("flipW")}
-                >
-                  <FlipIcon className={S.filpW} />
-                </button>
-                <button
-                  className={filter.flipH ? S.active : ""}
-                  onClick={() => handleFlip("flipH")}
-                >
-                  <FlipIcon className={S.filpH} />
-                </button>
-              </li>
-              <li className={S.effectGrop}>
-                <h4>회전</h4>
-                <button className={""}>
-                  <RotateIcon
-                    className={S.rotateL}
-                    onClick={() => handleRotate("L")}
-                  />
-                </button>
-                <button className={""}>
-                  <RotateIcon
-                    className={S.rotateR}
-                    onClick={() => handleRotate("R")}
-                  />
-                </button>
-              </li>
-            </ul>
-            <button
-              className={S.cropFinishBtn}
-              onClick={() => handleSetCroppedImg(isOpen)}
-            >
-              적용
-            </button>
-          </div>
+      <div className={S.editModal}>
+        <Cropper
+          src={imageList[isOpen].src}
+          style={{
+            width: "100%",
+            height: "auto",
+            maxHeight: "60vh",
+          }}
+          ref={cropperRef}
+          initialAspectRatio={1 / 1}
+          aspectRatio={1 / 1}
+          viewMode={0}
+          autoCropArea={1}
+          guides={false}
+          highlight={false}
+          background={false}
+          minContainerWidth={250}
+          minContainerHeight={300}
+          minCropBoxWidth={100}
+          minCropBoxHeight={100}
+          minCanvasWidth={50}
+          minCanvasHeight={50}
+          dragMode="move"
+        />
+        <div className={S.buttonWrap}>
+          <ul className={S.effectWrap}>
+            <li className={S.effectGrop}>
+              <button onClick={handleReset}>
+                <h4>초기화</h4>
+              </button>
+            </li>
+            <li className={S.effectGrop}>
+              <h4>반전</h4>
+              <button
+                className={filter.flipW ? S.active : ""}
+                onClick={() => handleFlip("flipW")}
+              >
+                <FlipIcon className={S.filpW} />
+              </button>
+              <button
+                className={filter.flipH ? S.active : ""}
+                onClick={() => handleFlip("flipH")}
+              >
+                <FlipIcon className={S.filpH} />
+              </button>
+            </li>
+            <li className={S.effectGrop}>
+              <h4>회전</h4>
+              <button className={""}>
+                <RotateIcon
+                  className={S.rotateL}
+                  onClick={() => handleRotate("L")}
+                />
+              </button>
+              <button className={""}>
+                <RotateIcon
+                  className={S.rotateR}
+                  onClick={() => handleRotate("R")}
+                />
+              </button>
+            </li>
+          </ul>
+          <button
+            className={S.cropFinishBtn}
+            onClick={() => handleSetCroppedImg(isOpen)}
+          >
+            적용
+          </button>
         </div>
       </div>
     </Modal>

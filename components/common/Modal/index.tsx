@@ -7,10 +7,8 @@ interface Props extends PropsWithChildren {
 const Modal = ({ children, onClose }: Props) => {
   return (
     <>
-      <div className={S.modalContainer}>
-        {children}
-        <div className={S.dimm} onClick={onClose} />
-      </div>
+      <div className={S.modalContainer}>{children}</div>
+      <div className={S.dimm} onClick={onClose} />
     </>
   );
 };
