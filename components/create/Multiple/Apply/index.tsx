@@ -2,8 +2,8 @@
 
 import HandleBtn from "@/components/common/HandleBtn";
 import useGifCreateStore from "@/store/gif/create";
-import { handleCreateGif } from "@/utils/gif";
-import S from "./styles.module.scss"
+import { handleMultiCreateGif } from "@/utils/gif";
+import E from "../../effect.module.scss"
 
 const Apply = () => {
     
@@ -14,8 +14,8 @@ const Apply = () => {
 
 
     return ( 
-            <div className={S.btnWrap}>
-                <HandleBtn style={resultGif ? "LINE" : "FILL"} onClick={handleCreateGif}>gif 미리보기 생성</HandleBtn>
+            <div className={E.btnWrap}>
+                <HandleBtn style={resultGif ? "LINE" : "FILL"} onClick={handleMultiCreateGif}>gif 미리보기 생성</HandleBtn>
                 <HandleBtn style="LINE" onClick={reset}>초기화</HandleBtn>
             </div>
     );

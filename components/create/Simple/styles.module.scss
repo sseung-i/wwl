@@ -1,0 +1,19 @@
+.squareBox {
+    position: relative;
+    @include flex();
+    width: 100%;
+    aspect-ratio: 1/1;
+    border: 1px solid #ddd;
+    overflow: hidden;
+    cursor: pointer;
+
+    > img {
+        object-fit: cover;
+    }
+}
+
+
+.fileInput {
+    position: absolute;
+    visibility: hidden;
+}

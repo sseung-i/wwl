@@ -1,0 +1,58 @@
+.effects {
+    @include flex($direction: column, $justify: flex-start, $align: space-between, $gap: 14px);
+}
+
+.effectWrap {
+    padding: 10px 16px;
+    @include flex($justify: flex-start, $gap: 10px);
+    border: 1px solid $--border-light;
+    border-radius: 6px;
+    
+    .effectName {
+        flex-shrink: 0;
+        @include T-s("b");
+    }
+
+    .inputWrap {
+        width: 100%;
+        @include flex($justify: flex-start, $gap: 10px);
+        @include T-xs();
+        color: $--T-medium;
+
+        > span {
+            flex-shrink: 0;
+            min-width: 30px;
+            text-align: right;
+        }
+
+        .radioInput {
+            width: max-content;
+            min-width: 20px;
+            padding: 3px 5px;
+            // aspect-ratio: 1/1;
+            @include flex();
+            border-radius: 10px;
+            cursor: pointer;
+
+            &.active {
+                font-weight: 700;
+                color: $--white;
+                background-color: $--keycolor;
+            }
+        }
+
+        input[type="range"] {
+            width: 100%;
+        }
+
+        input[type="radio"] {
+            position: absolute;
+            visibility: hidden;
+        }
+    }
+}
+
+
+.btnWrap {
+    @include flex($direction: column, $gap: 10px);
+}

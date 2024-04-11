@@ -1,9 +1,6 @@
 "use client";
 
-import { ChangeEvent, useRef, useState } from "react";
 import S from "./styles.module.scss";
-import Modal from "../../../common/Modal";
-import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import "swiper/css";
 
@@ -30,7 +27,7 @@ const AddingImageList = () => {
   } = useGifCreateStore((state) => state);
 
   /** 이미지 핸들러 */
-  const handleAddImgFile = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleAddImgFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files) return;
     const filesArray = Array.from(files);

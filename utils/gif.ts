@@ -2,7 +2,7 @@ import useGifCreateStore from "@/store/gif/create";
 import workerStr from "./gifWorker";
 import GIF from "gif.js.optimized";
 
-export const handleCreateGif = async () => {
+export const handleMultiCreateGif = async () => {
   const workerBlob = new Blob([workerStr], {
     type: "application/javascript",
   });
@@ -13,6 +13,8 @@ export const handleCreateGif = async () => {
     quality: 1,
     width: 300,
     height: 300,
+    background: "#fff",
+
   });
 
   const imageList = useGifCreateStore.getState().imageList;
@@ -23,7 +25,7 @@ export const handleCreateGif = async () => {
       const ctx = ref.getContext("2d", { willReadFrequently: true });
       if (ctx) {
         // 캔버스 컨텍스트를 직접 프레임으로 추가합니다.
-        gif.addFrame(ctx, { delay: delay, copy: true });
+        gif.addFrame(ctx, { delay: delay, copy: false });
       }
     }
   });
@@ -36,3 +38,7 @@ export const handleCreateGif = async () => {
 
   gif.render(); // GIF 생성 시작
 };
+
+export const handleSingleCreateGif = async () => {
+  //
+}

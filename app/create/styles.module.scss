@@ -1,5 +1,5 @@
 .typeList {
-    height: calc(100vh - $--header-height);
+    height: calc(100dvh - $--header-height);
     @include flex($direction: column);
     
     .type {

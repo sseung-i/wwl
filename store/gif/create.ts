@@ -9,6 +9,7 @@ export type State = {
   effect: {
     rotate: null | "R" | "L";
     scale: number;
+    step: number;
     time: number;
   }
 };
@@ -33,6 +34,7 @@ export const initValue = {
   effect: {
     rotate: null,
     scale: 1,
+    step: 4,
     time: 1000,
   }
 }
