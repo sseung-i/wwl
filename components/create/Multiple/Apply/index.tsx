@@ -2,10 +2,13 @@
 
 import HandleBtn from "@/components/common/HandleBtn";
 import useGifCreateStore from "@/store/gif/create";
-import { handleMultiCreateGif } from "@/utils/gif";
+import { handleMultiCreateGif, handleSingleCreateGif } from "@/utils/gif";
 import E from "../../effect.module.scss"
 
-const Apply = () => {
+interface Props {
+    type: "MULTI" | "SINGLE"
+}
+const Apply = ({type}:Props) => {
     
     const resultGif = useGifCreateStore(state => state.resultGif);
     const reset = useGifCreateStore(state => state.reset);
@@ -15,7 +18,7 @@ const Apply = () => {
 
     return ( 
             <div className={E.btnWrap}>
-                <HandleBtn style={resultGif ? "LINE" : "FILL"} onClick={handleMultiCreateGif}>gif 미리보기 생성</HandleBtn>
+                <HandleBtn style={resultGif ? "LINE" : "FILL"} onClick={type === "MULTI" ? handleMultiCreateGif : handleSingleCreateGif}>gif 미리보기 생성</HandleBtn>
                 <HandleBtn style="LINE" onClick={reset}>초기화</HandleBtn>
             </div>
     );

@@ -9,21 +9,20 @@ import { useState } from "react";
 import EffectInfo from "./EffectInfo";
 import HandleBtn from "@/components/common/HandleBtn";
 import { handleSingleCreateGif } from "@/utils/gif";
+import dynamic from "next/dynamic";
+import ResultGif from "../Multiple/ResultGif";
 
+const DynamicApply = dynamic(() => import("@/components/create/Multiple/Apply"),{
+    ssr: false
+  })
 const Simple = () => {
-
-    const [file,setFile] = useState<null|File>(null);
-
-    const { resultGif, addImage, reset } = useGifCreateStore((state) => state);
+    const { imageFile, addImage } = useGifCreateStore((state) => state);
 
     /** 이미지 핸들러 */
     const handleAddImgFile = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (!files) return;
-        setFile(files[0])
-        // const filesArray = Array.from(files);
-
-        // addImage(filesArray);
+        addImage(files[0])
 
         e.target.value = "";
     };
@@ -40,25 +39,25 @@ const Simple = () => {
                     accept="image/*"
                 />
                 <label htmlFor="addImgInput" className={`${S.squareBox} ${S.addBtn}`}>
-                    {!file ?
+                    {!imageFile ?
                         <span>
                             이미지를 선택해주세요.
                         </span>
                         :
-                        <Image src={URL.createObjectURL(file)} alt="image" fill/>
+                        <Image src={URL.createObjectURL(imageFile)} alt="image" fill/>
                     }
                 </label>
             </Section>
-            {!!file &&
-                <>
-                    <Section title="효과 선택">
-                        <EffectInfo />
-                    </Section>
-                    <div className={E.btnWrap}>
-                        <HandleBtn style={resultGif ? "LINE" : "FILL"} onClick={() => handleSingleCreateGif()}>gif 미리보기 생성</HandleBtn>
-                        <HandleBtn style="LINE" onClick={reset}>초기화</HandleBtn>
-                    </div>
-                </>
+            {!!imageFile &&
+            <>
+                <Section title="효과 선택">
+                    <EffectInfo />
+                </Section>
+                <Section>
+                    <DynamicApply type="SINGLE" />
+                </Section>
+                <ResultGif />
+            </>
             }
         </>
     );

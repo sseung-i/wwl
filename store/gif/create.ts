@@ -4,6 +4,7 @@ import { create } from "zustand";
 type ImageListItem = { ref: HTMLCanvasElement | null; src: string };
 export type State = {
   isOpen: number | null;
+  imageFile: File | null;
   imageList: ImageListItem[];
   resultGif: string;
   effect: {
@@ -15,7 +16,8 @@ export type State = {
 };
 
 type Action = {
-  addImage: (files: File[]) => void;
+  addImage: (file: File) => void;
+  addImages: (files: File[]) => void;
   deleteImage: (index: number) => void;
   changeImageToBlob: (blobImage: Blob, listIndex: number) => void;
   changeImageListOrder: (type: "PREV" | "NEXT", targetIndex: number) => void;
@@ -29,6 +31,7 @@ type Action = {
 
 export const initValue = {
   isOpen: null,
+  imageFile: null,
   imageList: [],
   resultGif: "",
   effect: {
@@ -41,7 +44,8 @@ export const initValue = {
 
 const useGifCreateStore = create<State & Action>((set, get) => ({
   ...initValue,
-  addImage: (files) =>
+  addImage: (file) => set({imageFile: file}),
+  addImages: (files) =>
     set((state) => ({
       imageList: [
         ...state.imageList,

@@ -18,7 +18,7 @@ const AddingImageList = () => {
   const {
     isOpen,
     imageList,
-    addImage,
+    addImages,
     deleteImage,
     changeImageListOrder,
     addRefToImageList,
@@ -32,7 +32,7 @@ const AddingImageList = () => {
     if (!files) return;
     const filesArray = Array.from(files);
 
-    addImage(filesArray);
+    addImages(filesArray);
 
     e.target.value = "";
   };

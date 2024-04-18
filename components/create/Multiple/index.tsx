@@ -4,10 +4,11 @@ import AddingImageList from "./AddingImageList";
 import EffectInfo from "./EffectInfo";
 import ResultGif from "./ResultGif";
 
+
+const DynamicApply = dynamic(() => import("@/components/create/Multiple/Apply"),{
+    ssr: false
+  })
 const Multiple = () => {
-    const DynamicApply = dynamic(() => import("@/components/create/Multiple/Apply"),{
-        ssr: false
-      })
     return (
     <>
         <Section title="이미지 선택 (최대 9개)">
@@ -17,7 +18,7 @@ const Multiple = () => {
             <EffectInfo />
         </Section>
         <Section>
-            <DynamicApply />
+            <DynamicApply type="MULTI" />
         </Section>
         <ResultGif />
 
