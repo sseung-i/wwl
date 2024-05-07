@@ -4,14 +4,10 @@ import HandleBtn from "@/components/common/HandleBtn";
 import useGifCreateStore from "@/store/gif/create";
 import Image from "next/image";
 import S from "./styles.module.scss";
-import { axiosPost } from "@/utils/axios";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const ResultGif = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const isOpen = searchParams.get("isOpen");
   const resultGif = useGifCreateStore((state) => state.resultGif);
   const reset = useGifCreateStore((state) => state.reset);
 
@@ -25,34 +21,7 @@ const ResultGif = () => {
     document.body.removeChild(link); // 사용 후 <a> 태그를 문서에서 제거
   };
 
-  const handleUpload = async () => {
-    const formData = new FormData();
-    formData.append("gifImage", resultGif);
-
-    try {
-      const res = await axiosPost(
-        "/v1/api/file",
-        {
-          file: formData,
-          userId: 1234,
-        },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      res.data
-      console.log("---res ::", res);
-
-    } catch (err) {
-
-    }
-
-
-
-  };
+ 
 
   return (
     <>
