@@ -1,0 +1,14 @@
+.resultImg {
+    margin-inline: auto;
+};
+
+
+
+.title {
+    @include inputBox();
+}
+
+.description {
+    min-height: 100px;
+    @include inputBox();
+}

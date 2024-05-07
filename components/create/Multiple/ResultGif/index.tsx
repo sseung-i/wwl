@@ -5,8 +5,13 @@ import useGifCreateStore from "@/store/gif/create";
 import Image from "next/image";
 import S from "./styles.module.scss";
 import { axiosPost } from "@/utils/axios";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 const ResultGif = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const isOpen = searchParams.get("isOpen");
   const resultGif = useGifCreateStore((state) => state.resultGif);
   const reset = useGifCreateStore((state) => state.reset);
 
@@ -24,24 +29,34 @@ const ResultGif = () => {
     const formData = new FormData();
     formData.append("gifImage", resultGif);
 
-    const res = await axiosPost(
-      "/v1/api/file",
-      {
-        file: formData,
-        userId: 1234,
-      },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
+    try {
+      const res = await axiosPost(
+        "/v1/api/file",
+        {
+          file: formData,
+          userId: 1234,
         },
-      }
-    );
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
-    console.log("---res ::", res);
+      res.data
+      console.log("---res ::", res);
+
+    } catch (err) {
+
+    }
+
+
+
   };
 
   return (
-    resultGif && (
+    <>
+    { resultGif && (
       <>
         <Image
           className={S.resultImg}
@@ -50,10 +65,10 @@ const ResultGif = () => {
           width={300}
           height={300}
         />
-        <HandleBtn onClick={handleUpload}>등록하기</HandleBtn>
-        <button onClick={handleDownload}>다운로드 (임시로 놔둠)</button>
+        <HandleBtn onClick={() => router.push("/create/register")}>등록하러가기</HandleBtn>
       </>
-    )
+    )}
+    </>
   );
 };
 

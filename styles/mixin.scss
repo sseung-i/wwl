@@ -12,3 +12,11 @@
     @content;
   }
 }
+
+@mixin inputBox {
+  border: 1px solid $--border-medium;
+  border-radius: $--radius-s;
+  // height: 40px;
+  padding: 10px 16px;
+  @include T-r();
+}
