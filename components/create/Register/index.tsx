@@ -10,7 +10,7 @@ import { axiosPost } from "@/utils/axios";
 import { useState } from "react";
 
 const Register = () => {
-    const [content,setContent] = useState({
+    const [content, setContent] = useState({
         title: "",
         description: "",
         isPublic: true,
@@ -20,13 +20,15 @@ const Register = () => {
     const handleUpload = async () => {
         const formData = new FormData();
         formData.append("gifImage", resultGif);
+
+        console.log("---",content)
     
         try {
           const fileRes = await axiosPost(
             "/v1/api/file",
             {
               file: formData,
-              userId: 1234,
+              userId: 1,
             },
             {
               headers: {
@@ -39,7 +41,7 @@ const Register = () => {
 
           const res = await axiosPost("/v1/api/user-emoticon",
             {
-                userId: 1234,
+                userId: 1,
                 imageId,
                 isPublic: content.isPublic,
                 title:content.title,
@@ -56,25 +58,33 @@ const Register = () => {
     
     
       };
+
+      console.log("---",content)
       
-    return ( <>
-        <Section title="이미지 등록">
-            <Image
-                className={S.resultImg}
-                src={resultGif}
-                alt="result"
-                width={300}
-                height={300}
-                />
-        </Section>
-        <Section title="제목">
-            <input className={S.title} placeholder="제목을 입력해주세요 (최대 20자)" />
-        </Section>
-        <Section title="설명">
-            <textarea className={S.description} placeholder="설명을 입력해주세요"/>
-        </Section>
-        <HandleBtn onClick={handleUpload}>등록</HandleBtn>
-    </> );
+    return ( 
+        <>
+            <Section title="이미지 등록">
+                <Image
+                    className={S.resultImg}
+                    src={resultGif}
+                    alt="result"
+                    width={300}
+                    height={300}
+                    />
+            </Section>
+            <Section title="제목">
+                <input className={S.title} placeholder="제목을 입력해주세요 (최대 20자)" value={content.title} onChange={(e) => {
+                    if(e.currentTarget?.value.length < 20) {
+                        setContent(prev => ({...prev, title:e.target.value}));
+                    }
+                }} />
+            </Section>
+            <Section title="설명">
+                <textarea className={S.description} placeholder="설명을 입력해주세요" onChange={(e) => setContent(prev => ({...prev, description: e.target.value}))} />
+            </Section>
+            <HandleBtn onClick={handleUpload}>등록</HandleBtn>
+        </>
+    );
 }
  
 export default Register;
