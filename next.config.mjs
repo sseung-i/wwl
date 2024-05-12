@@ -5,6 +5,14 @@ const nextConfig = {
     includePaths: ["styles"],
     prependData: `@import "styles/variables.scss"; @import "styles/fonts.scss"; @import "styles/mixin.scss";`, // prependData 옵션 추가
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "api.worklife.run",
+      },
+    ],
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

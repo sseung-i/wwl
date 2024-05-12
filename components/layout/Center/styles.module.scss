@@ -3,5 +3,9 @@
   min-height: calc(100dvh - $--header-height);
   margin-inline: auto;
   overflow: hidden;
-  background-color: #fff;
+  background-color: $--white;
+
+  &.hasBg {
+    background-color: $--bg;
+  }
 }

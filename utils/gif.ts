@@ -14,7 +14,6 @@ export const handleMultiCreateGif = async () => {
     width: 300,
     height: 300,
     background: "#fff",
-
   });
 
   const imageList = useGifCreateStore.getState().imageList;
@@ -31,9 +30,9 @@ export const handleMultiCreateGif = async () => {
   });
 
   gif.on("finished", (blob: Blob) => {
-    const url = URL.createObjectURL(blob);
-    console.log("--url ::", url);
-    useGifCreateStore.getState().setResultGif(url);
+    // const url = URL.createObjectURL(blob);
+    // console.log("--url ::", url);
+    useGifCreateStore.getState().setResultGif(blob);
   });
 
   gif.render(); // GIF 생성 시작
@@ -43,7 +42,7 @@ export const handleSingleCreateGif = async () => {
   const imageFile = useGifCreateStore.getState().imageFile;
   const { rotate, scale, step, time } = useGifCreateStore.getState().effect;
 
-  if(!imageFile) return;
+  if (!imageFile) return;
 
   const workerBlob = new Blob([workerStr], {
     type: "application/javascript",
@@ -58,21 +57,22 @@ export const handleSingleCreateGif = async () => {
     background: "#fff",
   });
 
-  const loadImage = (src:string): Promise<HTMLImageElement> => new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = reject;
-    img.src = src;
-  });
+  const loadImage = (src: string): Promise<HTMLImageElement> =>
+    new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
 
   const imageSrc = URL.createObjectURL(imageFile);
 
   try {
     const image = await loadImage(imageSrc);
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
 
-    if(!ctx) throw new Error("Failed to get canvas context");
+    if (!ctx) throw new Error("Failed to get canvas context");
 
     canvas.width = 300;
     canvas.height = 300;
@@ -83,24 +83,28 @@ export const handleSingleCreateGif = async () => {
       ctx.fillRect(0, 0, 300, 300);
       ctx.save();
       ctx.translate(150, 150);
-      console.log(step,(360 / step), (360 / step) * (rotate === "L" ? -1 * i : i))
-      const radians = ((360 / step) * i * (Math.PI / 180)); // canvas의 rotate는 라디안(radian) 단위 회전
+      console.log(
+        step,
+        360 / step,
+        (360 / step) * (rotate === "L" ? -1 * i : i)
+      );
+      const radians = (360 / step) * i * (Math.PI / 180); // canvas의 rotate는 라디안(radian) 단위 회전
       rotate && ctx.rotate(rotate === "L" ? -radians : radians);
-      ctx.scale(1 + (scale - 1) / step * i, 1 + (scale - 1) / step * i);
+      ctx.scale(1 + ((scale - 1) / step) * i, 1 + ((scale - 1) / step) * i);
       ctx.drawImage(image, -150, -150, 300, 300);
       ctx.restore();
       gif.addFrame(ctx, { delay: time / step, copy: true });
     }
 
-    gif.on("finished", (blob:Blob) => {
-      const url = URL.createObjectURL(blob);
-      console.log("--url ::", url);
-      useGifCreateStore.getState().setResultGif(url);
+    gif.on("finished", (blob: Blob) => {
+      // const url = URL.createObjectURL(blob);
+      // console.log("--url ::", url);
+      useGifCreateStore.getState().setResultGif(blob);
     });
 
     gif.render();
   } catch (error) {
-    console.error('이미지 로딩 실패:', error);
+    console.error("이미지 로딩 실패:", error);
   }
 
   /*
@@ -166,5 +170,4 @@ export const handleSingleCreateGif = async () => {
     console.error('이미지 로딩 실패');
   };
   */
-
-}
+};

@@ -1,0 +1,34 @@
+.sectionContainer {
+  height: 100%;
+  padding: 30px 20px;
+
+  .titleWrap {
+    @include T-s(b);
+    @include flex($justify: space-between);
+
+    > h3 {
+      @include flex($gap: 4px);
+    }
+
+    > .gridBtnWrap {
+      @include flex($gap: 8px);
+      color: $--T-light;
+
+      > .active {
+        color: $--keycolor-medium;
+      }
+    }
+  }
+
+  .slackticonLinkBtn {
+    margin-top: 24px;
+    margin-inline: auto;
+    height: 50px;
+    padding: 20px;
+    @include flex($justify: space-between);
+    color: $--keycolor-medium;
+    border: 1px solid $--keycolor-medium;
+    border-radius: 6px;
+    @include T-r("b");
+  }
+}

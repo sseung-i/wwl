@@ -41,3 +41,8 @@
   line-height: 36px;
   @include font-weight($b);
 }
+
+@mixin T-C($b: "n") {
+  font-size: 10px;
+  @include font-weight($b);
+}

@@ -1,0 +1,44 @@
+.title {
+  @include inputBox();
+}
+
+.description {
+  min-height: 100px;
+  @include inputBox();
+}
+
+.tagInput {
+  @include flex();
+  max-width: 300px;
+  @include inputBox();
+
+  > input {
+    width: 100%;
+    border: none;
+  }
+
+  > button {
+    padding: 3px 7px;
+    border-radius: $--radius-s;
+    background-color: $--keycolor-light;
+  }
+}
+
+.tagList {
+  @include flex($justify: flex-start, $gap: 5px 7px);
+  flex-wrap: wrap;
+
+  .tag {
+    @include flex($gap: 4px);
+    padding: 3px 7px;
+    @include T-C();
+    border: 1px solid $--keycolor-medium;
+    border-radius: 10px;
+    cursor: pointer;
+
+    .deleteTag {
+      width: 12px;
+      height: 12px;
+    }
+  }
+}

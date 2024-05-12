@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import Modal from "../../../common/Modal";
+import PageModal from "../../../common/Modal";
 import Cropper, { ReactCropperElement } from "react-cropper";
 import useGifCreateStore from "@/store/gif/create";
 import S from "./styles.module.scss";
@@ -102,7 +102,7 @@ const CropModal = ({ isOpen }: Props) => {
   };
 
   return (
-    <Modal onClose={handleEditorClose}>
+    <PageModal onClose={handleEditorClose}>
       <div className={S.editModal}>
         <Cropper
           src={imageList[isOpen].src}
@@ -173,7 +173,7 @@ const CropModal = ({ isOpen }: Props) => {
           </button>
         </div>
       </div>
-    </Modal>
+    </PageModal>
   );
 };
 

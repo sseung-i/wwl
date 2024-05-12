@@ -29,7 +29,7 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   async (res) => {
-    return res;
+    return res.data;
   },
   async (error) => {
     return Promise.reject(error);

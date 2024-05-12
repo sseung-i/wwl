@@ -6,6 +6,11 @@
   gap: $gap;
 }
 
+@mixin grid($repeat: 2, $size: 1fr, $gap: 0px) {
+  display: grid;
+  grid-template-columns: repeat($repeat, $size);
+  gap: $gap;
+}
 
 @mixin mq-s {
   @media (max-width: 640px) {

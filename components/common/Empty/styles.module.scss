@@ -1,0 +1,6 @@
+.emptyContainer {
+  @include flex();
+  height: 300px;
+
+  @include T-s();
+}

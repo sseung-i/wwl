@@ -1,17 +1,22 @@
-.handleBtn {
+.btn {
   padding: 14px;
   width: 100%;
   border-radius: 30px;
   @include T-m("b");
   margin-inline: auto;
-  
+
   &.FILL {
     color: #fff;
     background-color: $--keycolor;
   }
-  
+
   &.LINE {
-    border: 1px solid  $--keycolor-medium;
-    color:  $--keycolor-medium;
+    border: 1px solid $--keycolor-medium;
+    color: $--keycolor-medium;
+  }
+
+  &.disabled {
+    background-color: $--border-light;
+    color: $--T-medium;
   }
 }

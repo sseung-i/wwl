@@ -1,0 +1,23 @@
+.list {
+  margin-top: 14px;
+
+  &.grid-2 {
+    @include grid($repeat: 2, $gap: 10px);
+  }
+
+  &.grid-3 {
+    @include grid($repeat: 3, $gap: 10px);
+  }
+
+  .gifWrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1/1;
+    border: 1px solid $--border-light;
+    background-color: $--white;
+
+    > img {
+      object-fit: contain;
+    }
+  }
+}
