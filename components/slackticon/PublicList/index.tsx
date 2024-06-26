@@ -14,10 +14,11 @@ import Empty from "@/components/common/Empty";
 const PublicList = () => {
   const [grid, setGrid] = useState<2 | 3>(3);
 
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["publicSlackticonList"],
     queryFn: () => getPublicSlackticonList(),
   });
+
   return (
     <section className={S.sectionContainer}>
       <div className={S.titleWrap}>
@@ -40,11 +41,9 @@ const PublicList = () => {
           </button>
         </div>
       </div>
-      {isLoading ? (
-        <LoadingBox />
-      ) : data?.data ? (
+      {data?.emoticons ? (
         <>
-          <ListView slackticonList={data.data} gridNum={grid} />
+          <ListView slackticonList={data.emoticons} gridNum={grid} />
           <LinkBtn
             arrow
             name="more"

@@ -21,6 +21,7 @@
     border-radius: $--radius-m;
 
     .title {
+      order: 1;
       margin: 0;
       padding: 0;
       @include T-m(b);
@@ -28,13 +29,20 @@
     }
 
     .content {
+      order: 2;
       margin: 10px 0 0;
       white-space: pre-line;
       @include T-s();
       color: $--T-dark;
     }
 
+    .image {
+      order: 3;
+      border: 1px solid $--border-light;
+    }
+
     .btnWrap {
+      order: 4;
       width: 100%;
       @include flex($gap: 10px);
       margin: 20px 0 0;

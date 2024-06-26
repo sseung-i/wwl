@@ -1,14 +1,18 @@
 import useGifCreateStore from "@/store/gif/create";
 import workerStr from "./gifWorker";
 import GIF from "gif.js.optimized";
+import { Modal } from "@/components/common/Modal";
 
-export const handleMultiCreateGif = async () => {
+interface createProps {
+  handler: () => void;
+}
+export const handleMultiCreateGif = async ({ handler }: createProps) => {
   const workerBlob = new Blob([workerStr], {
     type: "application/javascript",
   });
 
   const gif = new GIF({
-    workers: 2,
+    workers: 5,
     workerScript: URL.createObjectURL(workerBlob),
     quality: 1,
     width: 300,
@@ -30,15 +34,21 @@ export const handleMultiCreateGif = async () => {
   });
 
   gif.on("finished", (blob: Blob) => {
-    // const url = URL.createObjectURL(blob);
-    // console.log("--url ::", url);
-    useGifCreateStore.getState().setResultGif(blob);
+    Modal.image({
+      title: "미리보기",
+      imageUrl: URL.createObjectURL(blob),
+      confirmBtn: "등록하러가기",
+      onConfirm: () => {
+        useGifCreateStore.getState().setResultGif(blob);
+        handler();
+      },
+    });
   });
 
   gif.render(); // GIF 생성 시작
 };
 
-export const handleSingleCreateGif = async () => {
+export const handleSingleCreateGif = async ({ handler }: createProps) => {
   const imageFile = useGifCreateStore.getState().imageFile;
   const { rotate, scale, step, time } = useGifCreateStore.getState().effect;
 
@@ -97,9 +107,15 @@ export const handleSingleCreateGif = async () => {
     }
 
     gif.on("finished", (blob: Blob) => {
-      // const url = URL.createObjectURL(blob);
-      // console.log("--url ::", url);
-      useGifCreateStore.getState().setResultGif(blob);
+      Modal.image({
+        title: "미리보기",
+        imageUrl: URL.createObjectURL(blob),
+        confirmBtn: "등록하러가기",
+        onConfirm: () => {
+          useGifCreateStore.getState().setResultGif(blob);
+          handler();
+        },
+      });
     });
 
     gif.render();

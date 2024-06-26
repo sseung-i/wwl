@@ -1,3 +1,4 @@
+import { LoadingBox } from "@/components/common/Loading";
 import { Center } from "@/components/layout";
 import { Detail, Search, SortList } from "@/components/slackticon";
 import { getSlackticonDetail } from "@/service/slackticon";
@@ -23,7 +24,9 @@ const SlackticonDetail = async ({
   return (
     <Center>
       <HydrationBoundary state={dehydratedState}>
-        <Detail />
+        <Suspense fallback={<LoadingBox />}>
+          <Detail />
+        </Suspense>
       </HydrationBoundary>
     </Center>
   );

@@ -2,11 +2,41 @@
   @include flex($direction: column, $align: flex-start, $gap: 18px);
   padding: 30px 20px;
 
+  .likeBtn {
+    @include flex($justify: flex-start, $gap: 4px);
+    @include T-s();
+    color: $--T-medium;
+
+    &.active {
+      color: $--keycolor;
+      @include T-s(b);
+    }
+
+    > svg {
+      width: 14px;
+    }
+  }
+
   .thumbnailWrap {
     position: relative;
     width: 100%;
     aspect-ratio: 1/1;
     border: 1px solid $--border-light;
+  }
+
+  .buttonWrap {
+    @include flex();
+    padding: 3px 0;
+
+    > button {
+      @include flex($gap: 10px);
+      width: 100%;
+      padding: 0 3px;
+
+      &:not(:first-child) {
+        border-left: 1px solid gray;
+      }
+    }
   }
 
   .title {

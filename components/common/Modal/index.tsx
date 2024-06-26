@@ -26,6 +26,11 @@ interface ConfirmModalProps extends CommonModalProps {
   onCancel?: () => void;
 }
 
+interface ImageModalProps extends CommonModalProps {
+  imageUrl: string;
+  imageHeight?: number;
+}
+
 export const Modal = {
   alert: ({
     title,
@@ -78,6 +83,31 @@ export const Modal = {
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         onCancel();
       }
+    });
+  },
+  image: ({
+    title,
+    imageUrl,
+    imageHeight,
+    confirmBtn = "확인",
+    onConfirm = () => {},
+  }: ImageModalProps) => {
+    Swal.fire({
+      title,
+      imageUrl,
+      imageHeight,
+      imageAlt: "gif image",
+      confirmButtonText: confirmBtn,
+      customClass: {
+        container: S.container,
+        popup: S.popup,
+        title: S.title,
+        image: S.image,
+        actions: S.btnWrap,
+        confirmButton: S.confirmBtn,
+      },
+    }).then((result) => {
+      if (result.isConfirmed) onConfirm();
     });
   },
 };

@@ -1,0 +1,96 @@
+.toastContainer {
+  width: fit-content !important;
+  padding: 10px 12px !important;
+  @include flex($justify: flex-start);
+
+  .toastTitle {
+    margin: 0 !important;
+    @include T-xs;
+  }
+
+  .progressBar {
+    background-color: $--keycolor;
+  }
+}
+
+$--animate-duration: 1s;
+$--animate-delay: 1s;
+$--animate-repeat: 1;
+
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-duration: var($--animate-duration);
+  animation-duration: var($--animate-duration);
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.fast {
+  -webkit-animation-duration: calc(1s * 0.8);
+  animation-duration: calc(1s * 0.8);
+  -webkit-animation-duration: calc(var($--animate-duration) * 0.8);
+  animation-duration: calc(var($--animate-duration) * 0.8);
+}
+
+@-webkit-keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeInUp;
+  animation-name: fadeInUp;
+}
+
+@-webkit-keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes fadeOutDown {
+  0% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 100%, 0);
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+.fadeOut {
+  -webkit-animation-name: fadeOutDown;
+  animation-name: fadeOutDown;
+}

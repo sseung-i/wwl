@@ -11,6 +11,8 @@ import ListView from "../ListView";
 import { LoadingBox } from "@/components/common/Loading";
 import Empty from "@/components/common/Empty";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Modal } from "@/components/common/Modal";
+import { cookies } from "next/headers";
 
 const SortList = () => {
   const pathname = usePathname();
@@ -60,8 +62,8 @@ const SortList = () => {
       </div>
       {isLoading ? (
         <LoadingBox />
-      ) : data?.data ? (
-        <ListView slackticonList={data.data} gridNum={grid} />
+      ) : data?.emoticons ? (
+        <ListView slackticonList={data.emoticons} gridNum={grid} />
       ) : (
         <Empty text="등록된 슬랙티콘이 없습니다." />
       )}

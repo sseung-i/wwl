@@ -1,4 +1,5 @@
 .sectionComponent {
+  width: 100%;
   @include flex(
     $direction: column,
     $align: space-between,

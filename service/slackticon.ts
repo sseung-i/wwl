@@ -1,4 +1,5 @@
-import { axiosGet } from "@/utils/axios";
+import Toast from "@/components/common/Toast";
+import { axiosGet, axiosPost } from "@/utils/axios";
 
 export type SlackticonListItemType = {
   id: number;
@@ -11,7 +12,7 @@ export type SlackticonListItemType = {
 interface PublicSlackticonListResponseType {
   page: number;
   totalPage: number;
-  data: SlackticonListItemType[];
+  emoticons: SlackticonListItemType[];
 }
 interface GetSlackticonListParams {
   sort: string;
@@ -35,7 +36,6 @@ export const getPublicSlackticonList = async (
   }
 
   const res = await axiosGet(`/v1/api/emoticon?${query}`);
-
   const data = res.data;
 
   return data;
@@ -44,21 +44,47 @@ export const getPublicSlackticonList = async (
 interface SlackticonDetailResponseType {
   id: number;
   userId: number;
+  userName: string;
   title: string;
-  description: null;
+  description: string;
   imageUrl: string;
-  isPublic: number;
-  createdDate: string;
-  updatedDate: string;
   tags: string[];
   likeCount: number;
+  isLiked: boolean;
+  isInBox: boolean;
+  isMine: boolean;
+  createdDate: string;
+  updatedDate: string;
 }
 export const getSlackticonDetail = async (
   id: string
 ): Promise<SlackticonDetailResponseType> => {
-  const res = await axiosGet(`/v1/api/user-emoticon/${id}`);
+  const res = await axiosGet(`/v1/api/emoticon/${id}`);
 
   const data = res.data;
 
   return data;
+};
+
+export const handleEmoticonBox = async (
+  emoticonId: number
+): Promise<"ADD" | "REMOVE" | undefined> => {
+  try {
+    const res = await axiosPost(`/v1/api/emoticon/box/${emoticonId}`);
+
+    return res.data;
+  } catch (err) {
+    return;
+  }
+};
+
+export const handleEmoticonLike = async (
+  emoticonId: number
+): Promise<"LIKE" | "UNLIKE" | undefined> => {
+  try {
+    const res = await axiosPost(`/v1/api/emoticon/like/${emoticonId}`);
+    return res.data;
+  } catch (err) {
+    return;
+  }
 };

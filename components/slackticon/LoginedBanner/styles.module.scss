@@ -1,0 +1,34 @@
+.bannerContainer {
+  @include flex();
+  gap: 20px;
+  width: 100%;
+  padding: 30px 20px;
+  @include T-l("b");
+  // text-align: center;
+  color: $--white;
+  background-color: $--keycolor;
+
+  .profileWrap {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    border: 5px solid $--keycolor-medium;
+    background-color: $--white;
+    overflow: hidden;
+
+    > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .LinkBtn {
+    margin-top: 14px;
+    margin-inline: auto;
+    @include flex($justify: space-between);
+    color: $--white;
+    @include T-r("b");
+  }
+}

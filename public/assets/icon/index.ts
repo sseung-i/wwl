@@ -11,6 +11,9 @@ export { default as Grid2Icon } from "./grid_2x2.svg";
 export { default as Grid3Icon } from "./grid_3x3.svg";
 export { default as SearchIcon } from "./search.svg";
 export { default as DeleteRoundIcon } from "./delete-round.svg";
+export { default as LikeIcon } from "./like.svg";
+export { default as SaveBoxIcon } from "./savebox.svg";
+export { default as DownloadIcon } from "./download.svg";
 
 /** 공용 */
 export { default as LinkArrowIcon } from "./arrow-link.svg";

@@ -1,7 +1,10 @@
 import LinkBtn from "@/components/common/LinkBtn";
 import S from "./styles.module.scss";
+import { cookies } from "next/headers";
 
 const Banner = () => {
+  const accessToken = cookies().get("accessToken")?.value;
+
   return (
     <div className={S.bannerContainer}>
       <h2>
