@@ -10,7 +10,7 @@ type Action = {
 };
 
 export const initValue = {
-  isLogined: !!clientCookies.get("accessToken"),
+  isLogined: false,
 };
 
 const useUserStore = create<State & Action>((set, get) => ({
