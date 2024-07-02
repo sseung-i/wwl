@@ -19,7 +19,7 @@ export function middleware(request: NextRequest) {
     if (accessToken && refreshToken) {
       const response = NextResponse.redirect(new URL("/login", request.url));
       response.cookies.set("accessToken", accessToken, {
-        httpOnly: true,
+        // httpOnly: true,
       });
       response.cookies.set("refreshToken", refreshToken, {
         httpOnly: true,
