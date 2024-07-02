@@ -1,0 +1,44 @@
+.modalContainer {
+  max-width: 600px;
+  width: 80dvw;
+  min-height: 50dvh;
+  padding: 30px;
+  @include flex($direction: column);
+  border-radius: $--radius-l;
+  margin: auto;
+  text-align: center;
+  background-color: $--white;
+
+  .mainTitle {
+    flex-grow: 2;
+    width: 100%;
+    @include flex($direction: column, $gap: 6px);
+    color: $--T-dark;
+    .projectName {
+      font-size: 46px;
+      font-weight: 700;
+    }
+    .projectSubName {
+      @include T-s;
+    }
+  }
+
+  .loginType {
+    flex-grow: 1;
+    width: 100%;
+    @include flex($direction: column);
+
+    .loginBtn {
+      padding: 14px;
+      width: 100%;
+      border: 1px solid $--border-medium;
+      border-radius: 60px;
+      @include T-s(b);
+      color: $--T-medium;
+      &:hover {
+        background-color: #ffd00033;
+        color: $--T-dark;
+      }
+    }
+  }
+}

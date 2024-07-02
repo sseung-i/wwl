@@ -16,11 +16,11 @@ import Toast from "@/components/common/Toast";
 import { DownloadIcon, LikeIcon, SaveBoxIcon } from "@/public/assets/icon";
 import { handleGifDownload } from "@/utils/slackticon";
 
-const SlacticonDetail = () => {
+const SlackticonDetail = () => {
   const params = useParams();
 
   const { data, refetch } = useQuery({
-    queryKey: ["slacticonDetail", params.id],
+    queryKey: ["slackticonDetail", params.id],
     queryFn: () => getSlackticonDetail(params.id as string),
   });
 
@@ -97,7 +97,7 @@ const SlacticonDetail = () => {
 
   return (
     <>
-      <section className={S.detailContainer}>
+      <div className={S.detailContainer}>
         <Section>
           <h3 className={S.title}>{title}</h3>
         </Section>
@@ -109,7 +109,7 @@ const SlacticonDetail = () => {
             <LikeIcon /> 추천 {likeCount}
           </button>
           <div className={S.thumbnailWrap}>
-            {/* <Image src={imageUrl} alt="썸네일 이미지" fill /> */}
+            <Image src={imageUrl} alt="썸네일 이미지" fill />
           </div>
           <div className={S.buttonWrap}>
             {isMine ? (
@@ -136,7 +136,7 @@ const SlacticonDetail = () => {
             ))}
           </ul>
         </Section>
-      </section>
+      </div>
       <section className={S.userContainer}>
         <div className={S.userProfileWrap}>
           <div className={S.userProfile}></div>
@@ -154,4 +154,4 @@ const SlacticonDetail = () => {
   );
 };
 
-export default SlacticonDetail;
+export default SlackticonDetail;

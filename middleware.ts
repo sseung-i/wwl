@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 
@@ -7,6 +6,11 @@ export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
   const isLoginPage = pathname === "/login";
+
+  if (pathname === "/") {
+    return NextResponse.redirect(new URL("/slackticon", request.url));
+  }
+
   if (isLoginPage) {
     const queryParams = request.nextUrl.searchParams;
     const accessToken = queryParams.get("accessToken");
@@ -14,8 +18,12 @@ export function middleware(request: NextRequest) {
 
     if (accessToken && refreshToken) {
       const response = NextResponse.redirect(new URL("/login", request.url));
-      response.cookies.set("accessToken", accessToken);
-      response.cookies.set("refreshToken", refreshToken);
+      response.cookies.set("accessToken", accessToken, {
+        httpOnly: true,
+      });
+      response.cookies.set("refreshToken", refreshToken, {
+        httpOnly: true,
+      });
 
       return response;
     }

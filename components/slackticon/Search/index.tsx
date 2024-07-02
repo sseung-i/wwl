@@ -5,19 +5,18 @@ import S from "./styles.module.scss";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Section } from "@/components/layout";
-
-const TAG_LIST = [
-  "번쩍번쩍번쩍",
-  "사람확대",
-  "동물얼굴",
-  "이모티콘부자",
-  "여섯글자까지",
-];
+import { useQuery } from "@tanstack/react-query";
+import { getRecommandedTags } from "@/service/slackticon";
 
 const Search = () => {
   const router = useRouter();
   const pathname = usePathname();
   const [word, setWord] = useState("");
+
+  const { data } = useQuery({
+    queryKey: ["/emoticon/tag"],
+    queryFn: () => getRecommandedTags(),
+  });
 
   const handleSearch = (type: "title" | "tag", word: string) => {
     if (!word) return;
@@ -56,14 +55,14 @@ const Search = () => {
       </div>
       <Section title="추천 태그">
         <ul className={S.tagList}>
-          {TAG_LIST.map((tag, index) => {
+          {data?.recommandedTags.map(({ tagId, tagName }) => {
             return (
               <li
-                key={index}
+                key={tagId}
                 className={S.tag}
-                onClick={() => handleSearch("tag", tag)}
+                onClick={() => handleSearch("tag", tagName)}
               >
-                {tag}
+                {tagName}
               </li>
             );
           })}

@@ -41,8 +41,12 @@ svg {
   max-width: 100%;
 }
 button {
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  color: inherit;
   background: none;
-  border: 0;
+  border: 1px solid transparent;
   cursor: pointer;
 }
 a,

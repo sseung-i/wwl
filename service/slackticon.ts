@@ -36,6 +36,12 @@ export const getPublicSlackticonList = async (
   }
 
   const res = await axiosGet(`/v1/api/emoticon?${query}`);
+  // Suspense 테스트용 시간지연
+  // await new Promise((resolve) => {
+  //   setTimeout(() => {
+  //     resolve("v");
+  //   }, 3000);
+  // });
   const data = res.data;
 
   return data;
@@ -83,6 +89,21 @@ export const handleEmoticonLike = async (
 ): Promise<"LIKE" | "UNLIKE" | undefined> => {
   try {
     const res = await axiosPost(`/v1/api/emoticon/like/${emoticonId}`);
+    return res.data;
+  } catch (err) {
+    return;
+  }
+};
+
+type TagType = { tagId: string; tagName: string };
+interface RecommandedTagsResponseType {
+  recommandedTags: TagType[];
+}
+export const getRecommandedTags = async (): Promise<
+  RecommandedTagsResponseType | undefined
+> => {
+  try {
+    const res = await axiosGet(`/v1/api/emoticon/tag`);
     return res.data;
   } catch (err) {
     return;

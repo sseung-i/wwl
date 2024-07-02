@@ -4,7 +4,6 @@ import { Detail, Search, SortList } from "@/components/slackticon";
 import { getSlackticonDetail } from "@/service/slackticon";
 import getQueryClient from "@/utils/getQueryClient";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
-import { Suspense } from "react";
 
 const SlackticonDetail = async ({
   params,
@@ -16,7 +15,7 @@ const SlackticonDetail = async ({
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ["slacticonDetail", params.id],
+    queryKey: ["slackticonDetail", params.id],
     queryFn: () => getSlackticonDetail(params.id),
   });
 
@@ -24,9 +23,7 @@ const SlackticonDetail = async ({
   return (
     <Center>
       <HydrationBoundary state={dehydratedState}>
-        <Suspense fallback={<LoadingBox />}>
-          <Detail />
-        </Suspense>
+        <Detail />
       </HydrationBoundary>
     </Center>
   );

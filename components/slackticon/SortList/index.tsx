@@ -28,7 +28,7 @@ const SortList = () => {
 
   // todo : 페이징
   const { data, isLoading } = useQuery({
-    queryKey: ["slackticonList", title || tag, sort, page],
+    queryKey: ["/emoticon", title || tag, sort, page],
     queryFn: () => getPublicSlackticonList(page, { sort, title, tag }),
   });
 
@@ -41,7 +41,7 @@ const SortList = () => {
   return (
     <section className={S.sectionContainer}>
       <div className={S.titleWrap}>
-        <select value={sort} onChange={handleSort}>
+        <select className={S.selectBox} value={sort} onChange={handleSort}>
           <option value="like">좋아요 순</option>
           <option value="createdDate">등록 순</option>
         </select>

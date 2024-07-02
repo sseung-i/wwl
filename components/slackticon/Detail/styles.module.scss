@@ -20,6 +20,8 @@
   .thumbnailWrap {
     position: relative;
     width: 100%;
+    max-width: 480px;
+    margin: auto;
     aspect-ratio: 1/1;
     border: 1px solid $--border-light;
   }
@@ -27,6 +29,9 @@
   .buttonWrap {
     @include flex();
     padding: 3px 0;
+    width: 100%;
+    max-width: 480px;
+    margin: auto;
 
     > button {
       @include flex($gap: 10px);
@@ -84,7 +89,6 @@
     overflow: visible;
     @include flex($justify: flex-start, $align: flex-start, $gap: 10px);
     margin-top: 18px;
-    border: 1px solid red;
 
     .customSlide {
       width: 90px;

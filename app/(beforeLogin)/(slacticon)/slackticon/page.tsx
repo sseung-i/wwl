@@ -9,35 +9,27 @@ import { Center } from "@/components/layout";
 import { cookies } from "next/headers";
 import { Suspense } from "react";
 import { LoadingBox } from "@/components/common/Loading";
-import getQueryClient from "@/utils/getQueryClient";
 import { getPublicSlackticonList } from "@/service/slackticon";
-import {
-  HydrationBoundary,
-  QueryClient,
-  dehydrate,
-} from "@tanstack/react-query";
-import dynamic from "next/dynamic";
-import Link from "next/link";
-
-// const SlackticonList = dynamic(
-//   () => import("@/components/slackticon/PublicList")
-// );
 
 export default function Home() {
   const accessToken = cookies().get("accessToken")?.value;
 
-  // const queryClient = getQueryClient();
-
-  // queryClient.prefetchQuery({
-  //   queryKey: ["/emoticon"],
-  //   queryFn: () => getPublicSlackticonList(),
-  // });
-
-  // const dehydratedState = dehydrate(queryClient);
   return (
     <Center bg>
-      <div> 찐 메인 </div>
-      <Link href="/slackticon">슬랙티콘</Link>
+      {accessToken ? <LoginedBanner /> : <NeedLoginBanner />}
+      {accessToken && (
+        <div className={S.btnWrap}>
+          <LinkBtn
+            name="슬랙티콘 만들기"
+            href="/create"
+            className={S.createBtn}
+          />
+        </div>
+      )}
+      <Suspense fallback={<LoadingBox />}>
+        {/* <PrefetchPublicList /> */}
+        <PublicList />
+      </Suspense>
     </Center>
   );
 }

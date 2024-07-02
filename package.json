@@ -11,6 +11,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.35.5",
     "@tanstack/react-query-devtools": "^5.35.5",
+    "@tanstack/react-query-next-experimental": "^5.49.2",
     "axios": "^1.6.8",
     "gif.js.optimized": "^1.0.1",
     "immer": "^10.0.4",
