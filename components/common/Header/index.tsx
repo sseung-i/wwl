@@ -2,15 +2,16 @@ import Link from "next/link";
 import S from "./styles.module.scss";
 import LoginoutBtn from "../LoginoutBtn";
 import { cookies } from "next/headers";
+import { auth } from "@/app/auth";
 
-const Header = () => {
-  const isLogined = cookies().has("accessToken");
+const Header = async () => {
+  const session = await auth();
 
   return (
     <header className={S.header}>
       <Link href="/">슬랙티콘</Link>
       <div>
-        <LoginoutBtn isLogined={isLogined} />
+        <LoginoutBtn isLogined={!!session} />
       </div>
     </header>
   );

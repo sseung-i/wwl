@@ -53,6 +53,7 @@ interface SlackticonDetailResponseType {
   userName: string;
   title: string;
   description: string;
+  imageId: number;
   imageUrl: string;
   tags: string[];
   likeCount: number;
@@ -95,6 +96,17 @@ export const handleEmoticonLike = async (
   }
 };
 
+export const getDownloadImg = async (imgId: number) => {
+  try {
+    const res = await axiosGet(`/v1/api/file/${imgId}`);
+
+    return res.data;
+  } catch (err) {
+    return;
+  }
+};
+
+// 추천 태그
 type TagType = { tagId: string; tagName: string };
 interface RecommandedTagsResponseType {
   recommandedTags: TagType[];
@@ -106,6 +118,42 @@ export const getRecommandedTags = async (): Promise<
     const res = await axiosGet(`/v1/api/emoticon/tag`);
     return res.data;
   } catch (err) {
+    return;
+  }
+};
+
+export const uploadFile = async (gifBlob: Blob) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", gifBlob, "slackticon.gif");
+    const fileRes = await axiosPost("/v1/api/file", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log("fileRes ::", fileRes);
+    return fileRes.data;
+  } catch (err) {
+    console.log("파일업로드 에러 ::", err);
+    return;
+  }
+};
+
+interface RegistSlacticonPostBody {
+  imageId: number;
+  isPublic: boolean;
+  title: string;
+  description: string;
+  tags: string[];
+}
+export const registSlacticonPost = async (body: RegistSlacticonPostBody) => {
+  try {
+    const res = await axiosPost("/v1/api/user-emoticon", body);
+
+    return res.data;
+  } catch (err) {
+    console.log("슬랙티콘 등록 에러 ::", err);
     return;
   }
 };

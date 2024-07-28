@@ -1,17 +1,25 @@
 "use client";
 
 import { clientCookies } from "@/utils/cookie";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { Modal } from "../Modal";
 
 const LoginoutBtn = ({ isLogined }: { isLogined: boolean }) => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const handleLogout = async () => {
-    fetch("/api/logout", {
-      method: "GET",
-    }).then(() => router.push("/login"));
+  const handleLogout = () => {
+    Modal.confirm({
+      title: "로그아웃",
+      content: "로그아웃 하시겠습니까?",
+      onConfirm: () => {
+        signOut();
+        clientCookies.delete("accessToken");
+        clientCookies.delete("refreshToken");
+      },
+    });
   };
   return pathname === "/login" ? (
     <></>

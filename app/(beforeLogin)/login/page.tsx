@@ -1,29 +1,21 @@
-import { PageWrapper } from "@/components/layout";
-import { cookies } from "next/headers";
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import LoginModal from "../_components/LoginModal";
+import { auth, signIn } from "@/app/auth";
 
-const Login = () => {
-  const cookieStore = cookies();
-  const accessToken = cookieStore.get("accessToken");
-  const refreshToken = cookieStore.get("refreshToken");
+const Login = async () => {
+  const session = await auth();
 
-  if (accessToken && refreshToken) {
+  if (!!session) {
     redirect("/");
   }
 
-  return (
-    <LoginModal />
-    // <PageWrapper>
-    //   <div style={{ textAlign: "center" }}>
-    //     {/* <LoginBtn type="kakao" /> */}
-    //     <Link href="https://api.worklife.run/oauth/kakao" replace>
-    //       kakao
-    //     </Link>
-    //   </div>
-    // </PageWrapper>
-  );
+  const handleLogin = async () => {
+    "use server";
+
+    await signIn("kakao");
+  };
+
+  return <LoginModal handleLogin={handleLogin} />;
 };
 
 export default Login;

@@ -6,13 +6,22 @@ import { Modal } from "@/components/common/Modal";
 import { useRouter } from "next/navigation";
 import { DeleteRoundIcon } from "@/public/assets/icon";
 import { Section } from "@/components/layout";
+import Toast from "@/components/common/Toast";
+import { registSlacticonPost, uploadFile } from "@/service/slackticon";
+
+interface ContentType {
+  title: string;
+  description: string;
+  tag: string[];
+  isPublic: boolean;
+}
 
 interface Props {
   gifBlob: Blob;
 }
 const Form = ({ gifBlob }: Props) => {
   const router = useRouter();
-  const [content, setContent] = useState({
+  const [content, setContent] = useState<ContentType>({
     title: "",
     description: "",
     tag: [] as string[],
@@ -25,10 +34,29 @@ const Form = ({ gifBlob }: Props) => {
     !gifBlob || !content.title || !content.description || !content.tag.length;
 
   const handleUpload = () => {
-    if (submitDisabled) {
-      Modal.alert({
-        title: "내용을 입력해주세요.",
+    const handleValidation = (content: ContentType) => {
+      if (!content.title) {
+        return "제목을 입력해주세요.";
+      }
+
+      if (!content.description) {
+        return "설명을 입력해주세요.";
+      }
+
+      if (content.tag.length < 3) {
+        return "태그 3개 이상부터 등록 가능합니다.";
+      }
+
+      return;
+    };
+
+    const hasMsg = handleValidation(content);
+
+    if (!!hasMsg) {
+      Toast().fire({
+        title: hasMsg,
       });
+
       return;
     }
 
@@ -38,31 +66,20 @@ const Form = ({ gifBlob }: Props) => {
         content.isPublic ? "공개" : "비공개"
       }]로 선택하셨습니다.`,
       onConfirm: async () => {
-        try {
-          const fileRes = await axiosPost(
-            "/v1/api/file",
-            {
-              file: gifBlob,
-              userId: 1,
-            },
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          );
+        const fileRes = await uploadFile(gifBlob);
+        const imageId = fileRes.id;
 
-          const imageId = fileRes.data.id;
+        const registBody = {
+          imageId,
+          isPublic: content.isPublic,
+          title: content.title,
+          description: content.description,
+          tags: content.tag,
+        };
 
-          await axiosPost("/v1/api/user-emoticon", {
-            userId: 1,
-            imageId,
-            isPublic: content.isPublic,
-            title: content.title,
-            description: content.description,
-            tags: content.tag,
-          });
+        const res = await registSlacticonPost(registBody);
 
+        if (res) {
           Modal.alert({
             title: "등록 완료",
             content: "저등록된 슬랙티콘은\n마이페이지에서 확인 가능합니다.",
@@ -70,8 +87,6 @@ const Form = ({ gifBlob }: Props) => {
               router.push("/mypage");
             },
           });
-        } catch (err) {
-          console.error("[ERROR]", err);
         }
       },
     });

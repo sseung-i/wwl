@@ -4,9 +4,12 @@ import PageModal from "@/components/common/Modal";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import S from "./styles.module.scss";
+import { signIn } from "@/app/auth";
+import { PropsWithChildren } from "react";
 
-const LoginModal = () => {
+const LoginModal = ({ handleLogin }: { handleLogin: () => void }) => {
   const router = useRouter();
+
   return (
     <PageModal
       onClose={() => {
@@ -19,13 +22,19 @@ const LoginModal = () => {
           <p className={S.projectSubName}>슬기로운 직장 생활</p>
         </div>
         <div className={S.loginType}>
-          <Link
+          <button
+            className={`${S.loginBtn} ${S.kakao}`}
+            onClick={() => handleLogin()}
+          >
+            카카오로 시작하기
+          </button>
+          {/* <Link
             className={`${S.loginBtn} ${S.kakao}`}
             href="https://api.worklife.run/oauth/kakao"
             replace
           >
             KAKAO
-          </Link>
+          </Link> */}
         </div>
       </div>
     </PageModal>

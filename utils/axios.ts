@@ -9,11 +9,12 @@ import { cookies } from "next/headers";
 
 const instance = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_SERVER_URL}`,
+  withCredentials: true,
   // timeout: 5000
 });
 
-export const axiosGet = (url: string) => {
-  const response = instance.get(url);
+export const axiosGet = (url: string, config?: AxiosRequestConfig) => {
+  const response = instance.get(url, config);
   return response;
 };
 export const axiosPost = (
@@ -22,6 +23,15 @@ export const axiosPost = (
   config?: AxiosRequestConfig
 ) => {
   const response = instance.post(url, body, config);
+
+  return response;
+};
+export const axiosPatch = (
+  url: string,
+  body?: any,
+  config?: AxiosRequestConfig
+) => {
+  const response = instance.patch(url, body, config);
 
   return response;
 };

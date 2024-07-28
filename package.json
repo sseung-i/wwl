@@ -16,6 +16,7 @@
     "gif.js.optimized": "^1.0.1",
     "immer": "^10.0.4",
     "next": "14.1.4",
+    "next-auth": "^5.0.0-beta.19",
     "react": "^18",
     "react-cropper": "^2.3.3",
     "react-dom": "^18",

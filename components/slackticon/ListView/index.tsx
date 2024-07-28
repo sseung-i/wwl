@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Modal } from "@/components/common/Modal";
 import { redirect, useRouter } from "next/navigation";
 import { clientCookies } from "@/utils/cookie";
+import { useSession } from "next-auth/react";
 
 interface Props {
   slackticonList: SlackticonListItemType[];
@@ -12,10 +13,10 @@ interface Props {
 
 const ListView = ({ slackticonList, gridNum }: Props) => {
   const router = useRouter();
+  const session = useSession().data;
 
-  const handleRouting = (slackticonId: number) => {
-    const accessToken = clientCookies.get("accessToken");
-    if (!!accessToken) {
+  const handleRouting = async (slackticonId: number) => {
+    if (!!session) {
       router.push(`/slackticon/${slackticonId}`);
     } else {
       Modal.confirm({

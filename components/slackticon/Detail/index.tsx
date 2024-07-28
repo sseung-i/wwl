@@ -67,6 +67,7 @@ const SlackticonDetail = () => {
     userId,
     title,
     description,
+    imageId,
     imageUrl,
     tags,
     likeCount,
@@ -76,8 +77,8 @@ const SlackticonDetail = () => {
     userName,
   } = data;
 
-  const Download = ({ imgUrl }: { imgUrl: string }) => (
-    <button onClick={() => handleGifDownload(imgUrl)}>
+  const Download = ({ imageId }: { imageId: number }) => (
+    <button onClick={() => handleGifDownload(imageId)}>
       <DownloadIcon width="18px" /> 다운로드
     </button>
   );
@@ -113,11 +114,11 @@ const SlackticonDetail = () => {
           </div>
           <div className={S.buttonWrap}>
             {isMine ? (
-              <Download imgUrl={imageUrl} />
+              <Download imageId={imageId} />
             ) : isInBox ? (
               <>
                 <SaveBox isInBox={isInBox} emoticonId={id} />
-                <Download imgUrl={imageUrl} />
+                <Download imageId={imageId} />
               </>
             ) : (
               <SaveBox isInBox={isInBox} emoticonId={id} />

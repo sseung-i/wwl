@@ -5,11 +5,17 @@ import useGifCreateStore from "@/store/gif/create";
 import Image from "next/image";
 import S from "./styles.module.scss";
 import Form from "./Form";
+import { useEffect } from "react";
 
 const Register = () => {
   const resultGif = useGifCreateStore((state) => state.resultGif);
+  // const reset = useGifCreateStore((state) => state.reset);
 
-  // todo : set state로인해 컴포넌트 재렌더되어 이미지 계속 처음부터 시작됨 -> 이미지/state 분리
+  // useEffect(() => {
+  //   return () => {
+  //     reset();
+  //   };
+  // }, [reset]);
 
   return (
     resultGif && (
