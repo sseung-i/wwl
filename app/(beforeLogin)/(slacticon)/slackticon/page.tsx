@@ -40,7 +40,7 @@ export default async function Home() {
   );
 }
 
-export async function PrefetchPublicList() {
+async function PrefetchPublicList() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
