@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Swiper, SwiperSlide } from "swiper/react";
 import S from "./styles.module.scss";
 import {
+  getDetailUserSlackticon,
   getSlackticonDetail,
   handleEmoticonBox,
   handleEmoticonLike,
@@ -15,16 +16,21 @@ import { Section } from "@/components/layout";
 import Toast from "@/components/common/Toast";
 import { DownloadIcon, LikeIcon, SaveBoxIcon } from "@/public/assets/icon";
 import { handleGifDownload } from "@/utils/slackticon";
+import Link from "next/link";
 
 const SlackticonDetail = () => {
   const params = useParams();
 
-  const { data, refetch } = useQuery({
+  const { data: detailData, refetch: detailRefetch } = useQuery({
     queryKey: ["slackticonDetail", params.id],
     queryFn: () => getSlackticonDetail(params.id as string),
   });
+  const { data: userData, refetch: userRefetch } = useQuery({
+    queryKey: ["slackticonDetailUser", params.id],
+    queryFn: () => getDetailUserSlackticon(params.id as string),
+  });
 
-  if (!data) return;
+  if (!detailData) return;
 
   const handleLiked = async (emoticonId: number) => {
     const nowStatus = await handleEmoticonLike(emoticonId);
@@ -36,7 +42,7 @@ const SlackticonDetail = () => {
             ? "슬랙티콘을 추천하였습니다 👍 "
             : "추천을 해제했어요 😢",
       });
-      refetch();
+      detailRefetch();
     } else {
       Toast().fire({
         title: "에러로 인해 추천에 실패하였습니다.",
@@ -54,7 +60,7 @@ const SlackticonDetail = () => {
             ? "담은리스트에 추가하였습니다."
             : "담은리스트에서 삭제하였습니다.",
       });
-      refetch();
+      detailRefetch();
     } else {
       Toast().fire({
         title: "에러로 인해 담기 수정에 실패하였습니다.",
@@ -75,7 +81,7 @@ const SlackticonDetail = () => {
     isInBox,
     isMine,
     userName,
-  } = data;
+  } = detailData;
 
   const Download = ({ imageId }: { imageId: number }) => (
     <button onClick={() => handleGifDownload(imageId)}>
@@ -144,9 +150,15 @@ const SlackticonDetail = () => {
           <h3>{userName}</h3>
         </div>
         <Swiper slidesPerView={"auto"} spaceBetween={10} className={S.imgList}>
-          {[1, 1, 1].map((item, index) => (
+          {userData?.map((item, index) => (
             <SwiperSlide key={index} className={S.customSlide}>
-              <div className={S.imgWrap}></div>
+              <Link href={`/slackticon/${item.id}`}>
+                <div className={S.count}>
+                  <LikeIcon width={16} />
+                  {item.likeCount}
+                </div>
+                <Image src={item.imageUrl} alt="user slackticon" fill />
+              </Link>
             </SwiperSlide>
           ))}
         </Swiper>

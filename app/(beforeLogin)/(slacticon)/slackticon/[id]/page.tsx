@@ -1,7 +1,10 @@
 import { LoadingBox } from "@/components/common/Loading";
 import { Center } from "@/components/layout";
 import { Detail, Search, SortList } from "@/components/slackticon";
-import { getSlackticonDetail } from "@/service/slackticon";
+import {
+  getDetailUserSlackticon,
+  getSlackticonDetail,
+} from "@/service/slackticon";
 import getQueryClient from "@/utils/getQueryClient";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 
@@ -17,6 +20,11 @@ const SlackticonDetail = async ({
   await queryClient.prefetchQuery({
     queryKey: ["slackticonDetail", params.id],
     queryFn: () => getSlackticonDetail(params.id),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["slackticonDetailUser", params.id],
+    queryFn: () => getDetailUserSlackticon(params.id),
   });
 
   const dehydratedState = dehydrate(queryClient);

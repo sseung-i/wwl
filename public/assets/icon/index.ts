@@ -17,3 +17,6 @@ export { default as DownloadIcon } from "./download.svg";
 
 /** 공용 */
 export { default as LinkArrowIcon } from "./arrow-link.svg";
+export { default as EditImgIcon } from "./edit-image.svg";
+export { default as EditTxtIcon } from "./edit-text.svg";
+export { default as HomeIcon } from "./home.svg";

@@ -1,6 +1,13 @@
-import { axiosGet, axiosPatch, axiosPost } from "@/utils/axios";
+import { axiosDelete, axiosGet, axiosPatch, axiosPost } from "@/utils/axios";
 
-export const getUserInfo = async () => {
+interface UserInfoResponseType {
+  id: number;
+  authType: string;
+  nickname: string;
+  email: string;
+  profileImageUrl: string;
+}
+export const getUserInfo = async (): Promise<UserInfoResponseType> => {
   const res = await axiosGet(`/v1/api/user`);
 
   return res.data;
@@ -44,6 +51,12 @@ export const checkUserExists = async ({ email }: { email: string }) => {
   const res = await axiosPost(`/v1/api/auth/kakao/user-exists`, {
     email,
   });
+
+  return res.data;
+};
+
+export const deleteUser = async () => {
+  const res = await axiosDelete(`/v1/api/user`);
 
   return res.data;
 };

@@ -1,0 +1,20 @@
+.menuContainer {
+  background-color: $--bg;
+  @include flex(
+    $direction: column,
+    $justify: flex-start,
+    $align: stretch,
+    $gap: 1px
+  );
+
+  .menuList {
+    @include flex($justify: space-between);
+    padding: 20px;
+    background-color: $--white;
+    cursor: pointer;
+
+    .icon {
+      color: $--border-light;
+    }
+  }
+}

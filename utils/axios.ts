@@ -17,6 +17,7 @@ export const axiosGet = (url: string, config?: AxiosRequestConfig) => {
   const response = instance.get(url, config);
   return response;
 };
+
 export const axiosPost = (
   url: string,
   body?: any,
@@ -26,6 +27,7 @@ export const axiosPost = (
 
   return response;
 };
+
 export const axiosPatch = (
   url: string,
   body?: any,
@@ -33,6 +35,11 @@ export const axiosPatch = (
 ) => {
   const response = instance.patch(url, body, config);
 
+  return response;
+};
+
+export const axiosDelete = (url: string, config?: AxiosRequestConfig) => {
+  const response = instance.delete(url, config);
   return response;
 };
 

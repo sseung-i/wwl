@@ -91,9 +91,26 @@
     margin-top: 18px;
 
     .customSlide {
+      position: relative;
       width: 90px;
       height: 90px;
+      border: 1px solid $--border-light;
+      border-radius: $--radius-s;
+      overflow: hidden;
       background-color: #fff;
+
+      .count {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10;
+        padding: 2px;
+        @include flex($gap: 3px);
+        @include T-xs(b);
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.73);
+      }
     }
   }
 }

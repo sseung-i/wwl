@@ -73,6 +73,23 @@ export const getSlackticonDetail = async (
   return data;
 };
 
+interface UserSlackticon {
+  id: number;
+  imageUrl: string;
+  likeCount: number;
+}
+type DetailUserSlackticonResponseType = UserSlackticon[];
+
+export const getDetailUserSlackticon = async (
+  id: string
+): Promise<DetailUserSlackticonResponseType> => {
+  const res = await axiosGet(`/v1/api/emoticon/${id}/more`);
+
+  const data = res.data;
+
+  return data;
+};
+
 export const handleEmoticonBox = async (
   emoticonId: number
 ): Promise<"ADD" | "REMOVE" | undefined> => {

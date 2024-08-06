@@ -1,0 +1,8 @@
+.contentWrap {
+  @include flex(
+    $direction: column,
+    $justify: flex-start,
+    $align: stretch,
+    $gap: 6px
+  );
+}

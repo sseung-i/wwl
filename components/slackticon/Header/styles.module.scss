@@ -1,14 +1,9 @@
 .header {
-  width: 100%;
   max-width: $--page-maxwidth;
   margin-inline: auto;
   @include flex($justify: space-between);
   height: $--header-height;
-  background-color: $--white;
+  background-color: $--keycolor;
   padding: 0 20px;
-
-  .siteName {
-    @include flex($gap: 10px);
-    @include T-r(b);
-  }
+  color: #fff;
 }

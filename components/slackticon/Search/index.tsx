@@ -2,7 +2,7 @@
 
 import { DeleteRoundIcon, SearchIcon } from "@/public/assets/icon";
 import S from "./styles.module.scss";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { Section } from "@/components/layout";
 import { useQuery } from "@tanstack/react-query";
@@ -19,9 +19,7 @@ const Search = () => {
   });
 
   const handleSearch = (type: "title" | "tag", word: string) => {
-    if (!word) return;
-
-    router.push(`${pathname}?${type}=${word}`);
+    router.push(`${pathname}${word ? `?${type}=${word}` : ""}`);
   };
 
   const handleResetWord = (
@@ -30,28 +28,31 @@ const Search = () => {
     e.preventDefault();
     setWord("");
   };
+
   return (
     <section className={S.searchContainer}>
-      <div className={S.inputContainer}>
-        <form
-          className={S.inputWrap}
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleSearch("title", word);
-          }}
-        >
-          <SearchIcon />
-          <input
-            value={word}
-            onChange={(e) => setWord(e.target.value)}
-            placeholder="검색어를 입력하세요"
-          />
+      <div className={S.searchWrap}>
+        <div className={S.inputContainer}>
+          <form
+            className={S.inputWrap}
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSearch("title", word);
+            }}
+          >
+            <SearchIcon />
+            <input
+              value={word}
+              onChange={(e) => setWord(e.target.value)}
+              placeholder="검색어를 입력하세요"
+            />
+          </form>
           {!!word && (
             <button className={S.resetBtn} onClick={handleResetWord}>
               <DeleteRoundIcon />
             </button>
           )}
-        </form>
+        </div>
       </div>
       <Section title="추천 태그">
         <ul className={S.tagList}>
