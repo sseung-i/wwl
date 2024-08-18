@@ -60,3 +60,11 @@ export const deleteUser = async () => {
 
   return res.data;
 };
+
+export const editNickName = async (nickName: string) => {
+  const res = await axiosPatch(`/v1/api/user`, {
+    nickname: nickName,
+  });
+
+  return res.data;
+};

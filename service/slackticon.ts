@@ -62,6 +62,7 @@ interface SlackticonDetailResponseType {
   isMine: boolean;
   createdDate: string;
   updatedDate: string;
+  userProfileImage: string;
 }
 export const getSlackticonDetail = async (
   id: string

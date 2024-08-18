@@ -81,6 +81,7 @@ const SlackticonDetail = () => {
     isInBox,
     isMine,
     userName,
+    userProfileImage,
   } = detailData;
 
   const Download = ({ imageId }: { imageId: number }) => (
@@ -146,7 +147,13 @@ const SlackticonDetail = () => {
       </div>
       <section className={S.userContainer}>
         <div className={S.userProfileWrap}>
-          <div className={S.userProfile}></div>
+          <div className={S.userProfile}>
+            <Image
+              src={userProfileImage}
+              alt={`${userName} profile image`}
+              fill
+            />
+          </div>
           <h3>{userName}</h3>
         </div>
         <Swiper slidesPerView={"auto"} spaceBetween={10} className={S.imgList}>
