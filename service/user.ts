@@ -61,9 +61,28 @@ export const deleteUser = async () => {
   return res.data;
 };
 
-export const editNickName = async (nickName: string) => {
+export const uploadNickName = async (nickName: string) => {
   const res = await axiosPatch(`/v1/api/user`, {
     nickname: nickName,
+  });
+
+  return res.data;
+};
+
+export const uploadProfileImage = async (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file, "userProfile");
+
+  const uploadRes = await axiosPost("/v1/api/file", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  const fileId = uploadRes.data.id;
+
+  const res = await axiosPatch(`/v1/api/user`, {
+    profileImageId: fileId,
   });
 
   return res.data;

@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import S from "./styles.module.scss";
-import Swal from "sweetalert2";
+import Swal, { SweetAlertInput } from "sweetalert2";
 
 interface Props extends PropsWithChildren {
   onClose: () => void;
@@ -29,6 +29,14 @@ interface ConfirmModalProps extends CommonModalProps {
 interface ImageModalProps extends CommonModalProps {
   imageUrl: string;
   imageHeight?: number;
+}
+
+interface InputModalProps extends CommonModalProps {
+  inputLabel: string;
+  inputPlaceholder: string;
+  maxLength?: string;
+  cancelBtn?: string;
+  onCancel?: () => void;
 }
 
 export const Modal = {
@@ -108,6 +116,39 @@ export const Modal = {
       },
     }).then((result) => {
       if (result.isConfirmed) onConfirm();
+    });
+  },
+  txtInput: ({
+    title,
+    inputLabel,
+    inputPlaceholder,
+    maxLength,
+    confirmBtn = "확인",
+    cancelBtn = "취소",
+  }: InputModalProps) => {
+    return Swal.fire({
+      title: title,
+      input: "text",
+      inputLabel: inputLabel,
+      inputPlaceholder: inputPlaceholder,
+      inputAttributes: {
+        maxlength: maxLength || "",
+        autocapitalize: "off",
+        autocorrect: "off",
+      },
+      confirmButtonText: confirmBtn,
+      cancelButtonText: cancelBtn,
+      customClass: {
+        container: S.container,
+        popup: S.popup,
+        title: S.title,
+        input: S.input,
+        actions: S.btnWrap,
+        confirmButton: S.confirmBtn,
+        cancelButton: S.cancelBtn,
+      },
+    }).then((result) => {
+      return result.isConfirmed ? result.value : "";
     });
   },
 };

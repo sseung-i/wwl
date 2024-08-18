@@ -4,7 +4,7 @@ import { useState } from "react";
 import S from "./styles.module.scss";
 import { Modal } from "@/components/common/Modal";
 import { useRouter } from "next/navigation";
-import { DeleteRoundIcon } from "@/public/assets/icon";
+import { CheckRoundIcon, DeleteRoundIcon } from "@/public/assets/icon";
 import { Section } from "@/components/layout";
 import Toast from "@/components/common/Toast";
 import { registSlacticonPost, uploadFile } from "@/service/slackticon";
@@ -94,8 +94,10 @@ const Form = ({ gifBlob }: Props) => {
 
   const handleAddTag = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setContent((prev) => ({ ...prev, tag: [...prev.tag, tag] }));
-    setTag("");
+    if (tag.trim()) {
+      setContent((prev) => ({ ...prev, tag: [...prev.tag, tag] }));
+      setTag("");
+    }
   };
 
   const handleDeleteTag = (index: number) => {
@@ -105,6 +107,10 @@ const Form = ({ gifBlob }: Props) => {
       ...currTagList.slice(index + 1, currTagList.length),
     ];
     setContent((prev) => ({ ...prev, tag: setTagList }));
+  };
+
+  const handleIsPublic = (isPublic: boolean) => {
+    setContent((prev) => ({ ...prev, isPublic }));
   };
 
   return (
@@ -160,6 +166,24 @@ const Form = ({ gifBlob }: Props) => {
             })}
           </ul>
         )}
+      </Section>
+      <Section title="공개여부" direction="ROW">
+        <div className={S.publicWrap}>
+          <button
+            className={`${S.btnWrap} ${content.isPublic ? S.active : ""}`}
+            onClick={() => handleIsPublic(true)}
+          >
+            <CheckRoundIcon />
+            공개
+          </button>
+          <button
+            className={`${S.btnWrap} ${!content.isPublic ? S.active : ""}`}
+            onClick={() => handleIsPublic(false)}
+          >
+            <CheckRoundIcon />
+            비공개
+          </button>
+        </div>
       </Section>
       <HandleBtn idDisabled={submitDisabled} onClick={handleUpload}>
         등록

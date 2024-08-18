@@ -11,6 +11,11 @@
     border: 4px solid $--keycolor-medium;
     border-radius: 41px;
 
+    > img {
+      border-radius: 40px;
+      overflow: hidden;
+    }
+
     .editProfile {
       @include flex();
       position: absolute;
@@ -21,6 +26,11 @@
       aspect-ratio: 1/1;
       border-radius: 14px;
       background-color: $--white;
+      cursor: pointer;
+
+      > input {
+        display: none;
+      }
     }
   }
   .infoWrap {

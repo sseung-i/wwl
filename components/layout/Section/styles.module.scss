@@ -6,4 +6,8 @@
     $justify: flex-start,
     $gap: 6px
   );
+
+  &.row {
+    flex-direction: row;
+  }
 }

@@ -13,6 +13,7 @@ import {
   LeftIcon,
   RightIcon,
 } from "@/public/assets/icon";
+import { Modal } from "@/components/common/Modal";
 
 const AddingImageList = () => {
   const {
@@ -38,10 +39,12 @@ const AddingImageList = () => {
   };
 
   const handleDeleteImg = (index: number) => {
-    // 모달로
-    if (window.confirm(`${index + 1}번째 이미지를 삭제하시겠습니까?`)) {
-      deleteImage(index);
-    }
+    Modal.confirm({
+      title: `${index + 1}번째 이미지를 삭제하시겠습니까?`,
+      onConfirm() {
+        deleteImage(index);
+      },
+    });
   };
 
   const setImageInCanvas = (

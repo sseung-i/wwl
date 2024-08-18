@@ -42,3 +42,18 @@
     }
   }
 }
+
+.publicWrap {
+  @include flex($justify: flex-start, $gap: 10px);
+
+  .btnWrap {
+    @include flex($gap: 2px);
+    @include T-xs();
+    color: $--T-medium;
+
+    &.active {
+      @include T-xs(b);
+      color: $--keycolor;
+    }
+  }
+}

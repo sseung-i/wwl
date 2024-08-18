@@ -37,6 +37,14 @@
       color: $--T-dark;
     }
 
+    .input {
+      order: 2;
+      margin: 10px 0 0;
+      white-space: pre-line;
+      @include T-s();
+      color: $--T-dark;
+    }
+
     .image {
       order: 3;
       border: 1px solid $--border-light;

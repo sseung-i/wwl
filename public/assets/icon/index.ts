@@ -14,6 +14,7 @@ export { default as DeleteRoundIcon } from "./delete-round.svg";
 export { default as LikeIcon } from "./like.svg";
 export { default as SaveBoxIcon } from "./savebox.svg";
 export { default as DownloadIcon } from "./download.svg";
+export { default as CheckRoundIcon } from "./check-round.svg";
 
 /** 공용 */
 export { default as LinkArrowIcon } from "./arrow-link.svg";
