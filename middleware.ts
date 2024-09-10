@@ -40,6 +40,8 @@ export async function middleware(request: NextRequest) {
       case "/":
       case "/slackticon":
       case "/slackticon/search":
+      case "/mypage":
+      case "/mypage/slackticon":
         return true;
       default:
         return false;

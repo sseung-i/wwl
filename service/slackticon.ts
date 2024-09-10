@@ -1,5 +1,5 @@
 import Toast from "@/components/common/Toast";
-import { axiosGet, axiosPost } from "@/utils/axios";
+import { axiosDelete, axiosGet, axiosPost } from "@/utils/axios";
 
 export type SlackticonListItemType = {
   id: number;
@@ -158,14 +158,14 @@ export const uploadFile = async (gifBlob: Blob) => {
   }
 };
 
-interface RegistSlacticonPostBody {
+interface registSlackticonPostBody {
   imageId: number;
   isPublic: boolean;
   title: string;
   description: string;
   tags: string[];
 }
-export const registSlacticonPost = async (body: RegistSlacticonPostBody) => {
+export const registSlackticonPost = async (body: registSlackticonPostBody) => {
   try {
     const res = await axiosPost("/v1/api/user-emoticon", body);
 
@@ -173,5 +173,13 @@ export const registSlacticonPost = async (body: RegistSlacticonPostBody) => {
   } catch (err) {
     console.log("슬랙티콘 등록 에러 ::", err);
     return;
+  }
+};
+
+export const deleteSlackticon = async (id: number) => {
+  try {
+    await axiosDelete(`/v1/api/user-emoticon/${id}`);
+  } catch (err) {
+    console.log("슬랙티콘 삭제 에러 ::", err);
   }
 };

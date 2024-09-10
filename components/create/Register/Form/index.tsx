@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { CheckRoundIcon, DeleteRoundIcon } from "@/public/assets/icon";
 import { Section } from "@/components/layout";
 import Toast from "@/components/common/Toast";
-import { registSlacticonPost, uploadFile } from "@/service/slackticon";
+import { registSlackticonPost, uploadFile } from "@/service/slackticon";
 
 interface ContentType {
   title: string;
@@ -77,7 +77,7 @@ const Form = ({ gifBlob }: Props) => {
           tags: content.tag,
         };
 
-        const res = await registSlacticonPost(registBody);
+        const res = await registSlackticonPost(registBody);
 
         if (res) {
           Modal.alert({

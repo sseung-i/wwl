@@ -18,7 +18,6 @@ const Mypage = async () => {
   return (
     <Center bg>
       <div className={S.contentWrap}>
-        <Header />
         <HydrationBoundary state={dehydratedState}>
           <UserInfo />
         </HydrationBoundary>

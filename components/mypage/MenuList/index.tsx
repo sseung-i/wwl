@@ -11,7 +11,7 @@ import { clientCookies } from "@/utils/cookie";
 const MenuList = () => {
   return (
     <div className={S.menuContainer}>
-      <Link href="/slackticon" className={S.menuList}>
+      <Link href="/mypage/slackticon?tab=MY" className={S.menuList}>
         <h4>슬랙티콘</h4>
         <LinkArrowIcon className={S.icon} />
       </Link>

@@ -1,0 +1,87 @@
+.setionContainer {
+  padding: 30px 20px;
+}
+
+.listTitleWrap {
+  width: 100%;
+  @include flex($justify: space-between);
+
+  .title {
+    @include T-s(b);
+  }
+}
+
+.itemGrid {
+  margin-top: 14px;
+  @include grid($repeat: 3, $gap: 10px);
+
+  .itemContainer {
+    background-color: $--white;
+    border: 1px solid $--border-light;
+    border-radius: 6px;
+
+    > .thumbnailWrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1/1;
+      background-color: $--keycolor-light;
+
+      > .deleteBtn {
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        width: 24px;
+        height: 24px;
+        border-radius: 12px;
+        background-color: $--keycolor-medium;
+        color: $--white;
+      }
+    }
+
+    > .btnWrap {
+      @include flex();
+      @include T-xs(b);
+      padding: 2px;
+
+      > button {
+        @include flex($gap: 3px);
+        width: 100%;
+      }
+    }
+  }
+}
+
+.pagenationWrap {
+  width: 100%;
+
+  .pagenationContainer {
+    margin-top: 14px;
+    @include flex($gap: 6px);
+
+    .pageBtn {
+      width: 30px;
+      height: 30px;
+      @include flex();
+      @include T-r();
+      border-radius: 15px;
+      color: $--T-medium;
+      cursor: pointer;
+
+      &.active {
+        background-color: $--keycolor;
+        @include T-r(b);
+        color: $--white;
+      }
+    }
+
+    .arrowBtn {
+      visibility: hidden;
+      padding: 4px 10px;
+      cursor: pointer;
+
+      &.active {
+        visibility: visible;
+      }
+    }
+  }
+}

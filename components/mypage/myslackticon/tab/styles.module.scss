@@ -1,0 +1,17 @@
+.tabContainer {
+  margin-top: 6px;
+  @include flex();
+
+  > .tab {
+    width: 100%;
+    padding: 6px;
+    background-color: $--keycolor-light;
+    color: $--white;
+
+    @include T-xs(b);
+
+    &.active {
+      background-color: $--keycolor;
+    }
+  }
+}
