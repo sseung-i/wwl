@@ -158,14 +158,41 @@ export const uploadFile = async (gifBlob: Blob) => {
   }
 };
 
-interface registSlackticonPostBody {
+interface GetSlackticonParams {
+  page: string;
+  isPublic: boolean | null;
+}
+type MySlackticonItemType = Omit<SlackticonListItemType, "isLiked"> & {
+  isPublic: 1 | 0;
+};
+interface UserSlackticonListResponseType {
+  emoticons: MySlackticonItemType[];
+}
+
+export const getUserSlackticonList = async ({
+  page,
+  isPublic,
+}: GetSlackticonParams): Promise<
+  UserSlackticonListResponseType | undefined
+> => {
+  try {
+    const res = await axiosGet(
+      `/v1/api/user-emoticon?page=${page}&size=9&isPublic=${isPublic}`
+    );
+    return res.data;
+  } catch (err) {
+    console.log("슬랙티콘 리스트 조회 에러 ::", err);
+  }
+};
+
+interface RegistSlackticonPostBody {
   imageId: number;
   isPublic: boolean;
   title: string;
   description: string;
   tags: string[];
 }
-export const registSlackticonPost = async (body: registSlackticonPostBody) => {
+export const registSlackticonPost = async (body: RegistSlackticonPostBody) => {
   try {
     const res = await axiosPost("/v1/api/user-emoticon", body);
 

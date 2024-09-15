@@ -6,6 +6,9 @@ import S from "./styles.module.scss";
 import ReactPaginate from "react-paginate";
 import { Modal } from "@/components/common/Modal";
 import { LikeIcon } from "@/public/assets/icon";
+import { useQuery } from "@tanstack/react-query";
+import { getUserSlackticonList } from "@/service/slackticon";
+import Image from "next/image";
 
 interface Params {
   nowTab: TabType;
@@ -16,17 +19,18 @@ const MySlackticonList = ({ nowTab }: Params) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const page = searchParams.get("page") || "1";
+  const isPublic =
+    searchParams.get("isPublic") === "true"
+      ? true
+      : searchParams.get("isPublic") === "false"
+      ? false
+      : null;
   const totalCount = 20;
   const isMyTab = nowTab === "MY";
 
-  // todo : get data
-  const mySlackticonData = new Array(9).fill(null).map(() => {
-    return {
-      id: 100,
-      title: "",
-      img: "",
-      like: 0,
-    };
+  const { data } = useQuery({
+    queryKey: ["mySlackticon", isPublic, page],
+    queryFn: () => getUserSlackticonList({ page, isPublic }),
   });
 
   const handlePage = (selectedItem: { selected: number }) => {
@@ -52,7 +56,7 @@ const MySlackticonList = ({ nowTab }: Params) => {
         {isMyTab && <div>전체</div>}
       </div>
       <ul className={S.itemGrid}>
-        {mySlackticonData.map((item, i) => (
+        {data?.emoticons.map((item, i) => (
           <li key={i} className={S.itemContainer}>
             <div className={S.thumbnailWrap}>
               <button
@@ -61,10 +65,15 @@ const MySlackticonList = ({ nowTab }: Params) => {
               >
                 x
               </button>
+              <Image
+                src={item.imageUrl}
+                alt={`${item.title} 썸네일 이미지`}
+                fill
+              />
             </div>
             <div className={S.btnWrap}>
               <button>
-                <LikeIcon width={16} /> {i}
+                <LikeIcon width={16} /> {item.likeCount}
               </button>
               <button>다운로드</button>
             </div>
