@@ -3,7 +3,7 @@
 import { DeleteRoundIcon, SearchIcon } from "@/public/assets/icon";
 import S from "./styles.module.scss";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Section } from "@/components/layout";
 import { useQuery } from "@tanstack/react-query";
 import { getRecommandedTags } from "@/service/slackticon";
@@ -11,6 +11,9 @@ import { getRecommandedTags } from "@/service/slackticon";
 const Search = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const tag = searchParams.get("tag") || "";
+  const title = searchParams.get("title") || "";
   const [word, setWord] = useState("");
 
   const { data } = useQuery({
@@ -28,6 +31,10 @@ const Search = () => {
     e.preventDefault();
     setWord("");
   };
+
+  useEffect(() => {
+    setWord(title);
+  }, [tag, title]);
 
   return (
     <section className={S.searchContainer}>

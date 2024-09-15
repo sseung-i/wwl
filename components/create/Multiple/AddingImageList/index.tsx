@@ -91,6 +91,8 @@ const AddingImageList = () => {
     }
   };
 
+  console.log("---imageList", imageList);
+
   return (
     <>
       <Swiper slidesPerView={"auto"} spaceBetween={10} className={S.imgList}>

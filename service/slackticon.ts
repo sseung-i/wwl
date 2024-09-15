@@ -35,16 +35,18 @@ export const getPublicSlackticonList = async (
     if (tag) query.append("tag", tag);
   }
 
-  const res = await axiosGet(`/v1/api/emoticon?${query}`);
-  // Suspense 테스트용 시간지연
-  // await new Promise((resolve) => {
-  //   setTimeout(() => {
-  //     resolve("v");
-  //   }, 3000);
-  // });
-  const data = res.data;
-
-  return data;
+  try {
+    const res = await axiosGet(`/v1/api/emoticon?${query}`);
+    // Suspense 테스트용 시간지연
+    // await new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     resolve("v");
+    //   }, 3000);
+    // });
+    return res.data;
+  } catch (err) {
+    throw new Error("공개 슬랙티콘 리스트 가져오기 실패");
+  }
 };
 
 interface SlackticonDetailResponseType {
@@ -159,29 +161,54 @@ export const uploadFile = async (gifBlob: Blob) => {
 };
 
 interface GetSlackticonParams {
-  page: string;
+  page: number;
   isPublic: boolean | null;
 }
 type MySlackticonItemType = Omit<SlackticonListItemType, "isLiked"> & {
   isPublic: 1 | 0;
 };
 interface UserSlackticonListResponseType {
+  page: number;
+  totalPage: number;
   emoticons: MySlackticonItemType[];
 }
 
 export const getUserSlackticonList = async ({
   page,
   isPublic,
-}: GetSlackticonParams): Promise<
-  UserSlackticonListResponseType | undefined
-> => {
+}: GetSlackticonParams): Promise<UserSlackticonListResponseType> => {
   try {
     const res = await axiosGet(
-      `/v1/api/user-emoticon?page=${page}&size=9&isPublic=${isPublic}`
+      `/v1/api/user-emoticon?page=${page}&size=12&isPublic=${isPublic}`
     );
     return res.data;
   } catch (err) {
-    console.log("슬랙티콘 리스트 조회 에러 ::", err);
+    throw new Error("슬랙티콘 리스트 조회 실패");
+  }
+};
+
+type BoxListItemType = {
+  id: number;
+  title: string;
+  imageUrl: string;
+  imageId: number;
+};
+interface UserBoxListResponseType {
+  page: number;
+  totalPage: number;
+  emoticons: BoxListItemType[];
+}
+interface GetBoxParams {
+  page: number;
+}
+export const getUserBoxList = async ({
+  page,
+}: GetBoxParams): Promise<UserBoxListResponseType> => {
+  try {
+    const res = await axiosGet(`/v1/api/emoticon/box?page=${page}&size=12`);
+    return res.data;
+  } catch (err) {
+    throw new Error("담은 리스트 조회 실패");
   }
 };
 

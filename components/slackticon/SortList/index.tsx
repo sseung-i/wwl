@@ -3,7 +3,7 @@
 import { Grid2Icon, Grid3Icon, UnlockIcon } from "@/public/assets/icon";
 import S from "./styles.module.scss";
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { getPublicSlackticonList } from "@/service/slackticon";
 import Image from "next/image";
 import LinkBtn from "@/components/common/LinkBtn";
@@ -13,6 +13,7 @@ import Empty from "@/components/common/Empty";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Modal } from "@/components/common/Modal";
 import { cookies } from "next/headers";
+import useObserver from "@/hooks/useObserver";
 
 const SortList = () => {
   const pathname = usePathname();
@@ -26,16 +27,26 @@ const SortList = () => {
   const tag = searchParams.get("tag");
   const page = 1;
 
-  // todo : 페이징
-  const { data, isLoading } = useQuery({
-    queryKey: ["/emoticon", title || tag, sort, page],
-    queryFn: () => getPublicSlackticonList(page, { sort, title, tag }),
-  });
+  const { data, isLoading, isFetching, hasNextPage, fetchNextPage } =
+    useInfiniteQuery({
+      queryKey: ["/emoticon", title || tag, sort],
+      queryFn: ({ pageParam = 1 }) =>
+        getPublicSlackticonList(pageParam, { sort, title, tag }),
+      getNextPageParam: (data) =>
+        data.page < data.totalPage ? data.page + 1 : undefined,
+      select: (data) => ({
+        emoticons: data?.pages.flatMap((page) => page.emoticons),
+        pageParams: data.pageParams,
+      }),
+      initialPageParam: 1,
+    });
+
+  const observerEle = useObserver({ isFetching, fetchNextPage, hasNextPage });
 
   const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const params = new URLSearchParams(searchParams);
     params.set("sort", e.target.value);
-    router.push(`${pathname}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`);
   };
 
   return (
@@ -62,8 +73,11 @@ const SortList = () => {
       </div>
       {isLoading ? (
         <LoadingBox />
-      ) : data?.emoticons ? (
-        <ListView slackticonList={data.emoticons} gridNum={grid} />
+      ) : !!data?.emoticons.length ? (
+        <>
+          <ListView slackticonList={data.emoticons} gridNum={grid} />
+          {observerEle}
+        </>
       ) : (
         <Empty text="등록된 슬랙티콘이 없습니다." />
       )}

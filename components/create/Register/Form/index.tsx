@@ -1,6 +1,6 @@
 import HandleBtn from "@/components/common/HandleBtn";
 import { axiosPost } from "@/utils/axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import S from "./styles.module.scss";
 import { Modal } from "@/components/common/Modal";
 import { useRouter } from "next/navigation";
@@ -8,6 +8,8 @@ import { CheckRoundIcon, DeleteRoundIcon } from "@/public/assets/icon";
 import { Section } from "@/components/layout";
 import Toast from "@/components/common/Toast";
 import { registSlackticonPost, uploadFile } from "@/service/slackticon";
+import getQueryClient from "@/utils/getQueryClient";
+import useGifCreateStore from "@/store/gif/create";
 
 interface ContentType {
   title: string;
@@ -20,6 +22,7 @@ interface Props {
   gifBlob: Blob;
 }
 const Form = ({ gifBlob }: Props) => {
+  const queryClient = getQueryClient();
   const router = useRouter();
   const [content, setContent] = useState<ContentType>({
     title: "",
@@ -80,6 +83,7 @@ const Form = ({ gifBlob }: Props) => {
         const res = await registSlackticonPost(registBody);
 
         if (res) {
+          queryClient.invalidateQueries({ queryKey: ["/emoticon"] });
           Modal.alert({
             title: "등록 완료",
             content: "저등록된 슬랙티콘은\n마이페이지에서 확인 가능합니다.",

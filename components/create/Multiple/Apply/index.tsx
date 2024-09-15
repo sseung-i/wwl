@@ -22,10 +22,10 @@ const Apply = ({ type }: Props) => {
         onClick={() =>
           type === "MULTI"
             ? handleMultiCreateGif({
-                handler: () => router.push("/create/register"),
+                handler: () => router.replace("/create/register"),
               })
             : handleSingleCreateGif({
-                handler: () => router.push("/create/register"),
+                handler: () => router.replace("/create/register"),
               })
         }
       >

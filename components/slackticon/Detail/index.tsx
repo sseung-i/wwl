@@ -156,7 +156,12 @@ const SlackticonDetail = () => {
           </div>
           <h3>{userName}</h3>
         </div>
-        <Swiper slidesPerView={"auto"} spaceBetween={10} className={S.imgList}>
+        <Swiper
+          slidesPerView={"auto"}
+          spaceBetween={10}
+          className={S.imgList}
+          wrapperClass={S.rail}
+        >
           {userData?.map((item, index) => (
             <SwiperSlide key={index} className={S.customSlide}>
               <Link href={`/slackticon/${item.id}`}>

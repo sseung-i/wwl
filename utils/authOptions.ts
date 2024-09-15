@@ -23,7 +23,6 @@ export const authOptions: NextAuthConfig = {
       if (!account) return false;
 
       const userInfo = await checkUserExists({ email: user?.email || "" });
-      console.log("--userInfo", userInfo);
 
       if (!userInfo) {
         const signUpBody: SignupBody = {

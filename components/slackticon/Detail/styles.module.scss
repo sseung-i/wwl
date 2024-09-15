@@ -87,14 +87,20 @@
 
   .imgList {
     // width: 100%;
+
     overflow: visible;
-    @include flex($justify: flex-start, $align: flex-start, $gap: 10px);
     margin-top: 18px;
+
+    .rail {
+      width: max-content;
+      @include flex($justify: flex-start);
+    }
 
     .customSlide {
       position: relative;
       width: 90px;
       height: 90px;
+      aspect-ratio: 1/1;
       border: 1px solid $--border-light;
       border-radius: $--radius-s;
       overflow: hidden;

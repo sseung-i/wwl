@@ -25,3 +25,20 @@
   padding: 10px 16px;
   @include T-r();
 }
+
+@mixin ellipsis($line: 1) {
+  @if ($line == 1) {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  @if (1 < $line) {
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: $line;
+    -webkit-box-orient: vertical;
+  }
+}
